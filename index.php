@@ -38,13 +38,13 @@
                     </div>
                     <div class="form-group">
                         <p class="icono-password">
-                            <input name="pass" type="password" class="form-control" placeholder="Constraseña" id="pass-group">
+                            <input name="pass" type="password" class="form-control" placeholder="Contraseña" id="pass-group">
                         </p>
                     </div>
                     <!--                     <button name="Enviar" value="Enviar" type="button" class="btn btn-warning">Login</button> -->
-                    <input type=submit name="Enviar" value="Enviar" class="btn btn-warning">
+                    <input type=submit name="Enviar" value="Enviar" class="btn btn-dark">
                     <div class="col-12 forgot">
-                        <a href="#" class="badge badge-info">Contraseña olvidada</a>
+                        <a href="#" class="badge badge-secondary">Contraseña olvidada</a>
                     </div>
                 </form>
             </div>
