@@ -52,7 +52,7 @@ if (!isset($_SESSION['usuario'])) {
         <a class="nav-link" href="#">Movimientos</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
+        <a class="nav-link" href="upload.php">Subir</a>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto nav-flex-icons">
