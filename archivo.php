@@ -18,6 +18,6 @@ class Archivo
 
     public function __toString()
     {
-        return $this->Id . " " . $this->Marca . " " . $this->Modelo . " " . $this->Precio . " " . $this->Alta . "<br>";
+        return $this->Id . " " . $this->Peso . " " . $this->Tipo . " " . $this->Propietario . "<br>";
     }
 }

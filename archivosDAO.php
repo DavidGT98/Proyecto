@@ -2,7 +2,7 @@
 require_once("archivo.php");
 require_once("libreriaPDOCLA.php");
 
-class daoArticulo extends ConBase
+class archivosDAO extends ConBase
 {
     /*     private $con; */
 
@@ -17,6 +17,9 @@ class daoArticulo extends ConBase
     {
         $consulta = "INSERT into ficheros values(:id,:peso,:tipo,:propietario)";
         $param = array(":id" => $Archivo->__GET("Id"), ":peso" => $Archivo->__GET("Peso"),  ":tipo" => $Archivo->__GET("Tipo"), ":propietario" => $Archivo->__GET("Propietario"));
+        foreach ($param as $key => $value) {
+            echo "clave: ". $key . " valor: " . $value;
+        }
         $this->ConsultaSimple($consulta, $param);
     }
 

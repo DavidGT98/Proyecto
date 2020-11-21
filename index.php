@@ -80,8 +80,8 @@
         $clave = sha1($salt1 . $clave . $salt2);
 
         if (LoginCorrecto($usuario, $clave)) {
-            echo "Login corecto";
-            $_SESSION['usuario'] = $usu;    //Creamos una de sesion para ese usuario 
+            session_start();
+            $_SESSION['usuario'] = $usuario;    //Creamos una de sesion para ese usuario 
             header("location: dashboard.php");  //Redireccionamos la pagina del menu
         } else {
             echo "<script>alert('Usuario/clave incorrecto');</script>";

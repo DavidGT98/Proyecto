@@ -4,7 +4,10 @@ if (!isset($_SESSION['usuario'])) {
   header("location:index.php");
 }
 
-if (isset($_POST['Enviar'])) {
+require_once("libreriaPDOCLA.php");
+require_once("archivosDAO.php");
+
+if (isset($_POST['Subir'])) {
   if (!empty($_FILES['Archivo']['name']))  //Si hemos seleccionado y subido la foto
   {
     $nombreArchivo = $_FILES['Archivo']['name'];
@@ -13,6 +16,8 @@ if (isset($_POST['Enviar'])) {
 
     $tamano = $_FILES["Archivo"]["size"];
 
+    $ext = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
+
     $archivo = fopen($temporal, "rb");   //Abrimos el archivo con formato binario
 
     /* $binario_contenido = addslashes(fread($archivo, $tamano)); */
@@ -20,8 +25,22 @@ if (isset($_POST['Enviar'])) {
     $binario_contenido = fread($archivo, $tamano);
 
     /* $binario_contenido = ConvertirImg($db,fread($archivo, $tamano)); */
+
+    $archivo = new Archivo;
+    $archivo->__set("Id", $nombreArchivo );
+    $archivo->__set("Tipo", $ext );
+    $archivo->__set("Peso", $tamano );
+    $archivo->__set("Propietario", $_SESSION['usuario']);
+
+    $dao1 = new archivosDAO("proyecto");
+
+    $dao1->Insertar($archivo);
+    echo "archivo subido";
+
+
   } else  //Sino hemos subido una foto ponemos a vacio esa variable
   {
+    echo "fichero no subido";
     $binario_contenido = "";
   }
 }
@@ -87,15 +106,18 @@ if (isset($_POST['Enviar'])) {
   </nav>
   <!--/.Navbar -->
   <!-- Collapsible content -->
+  <form name=f1 method=post action=# enctype="multipart/form-data">
   <div class="input-group p-5">
     <div class="input-group-prepend">
       <span class="input-group-text" id="inputGroupFileAddon01">Subir</span>
     </div>
     <div class="custom-file">
-      <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+      <input name=Archivo lang="es" type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
       <label class="custom-file-label" for="inputGroupFile01">Elegir archivo</label>
     </div>
   </div>
+  <input type=submit name="Subir" value="Subir" class="btn btn-default">
+  </form>
 </body>
 
 </html>

@@ -47,6 +47,8 @@ class ConBase
 
         $resul = $this->db->prepare($consulta);
 
+        echo $consulta;
+
         if (!$resul->execute($param)) {
             echo "Error al ejecutar la consulta";
         }
