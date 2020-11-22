@@ -6,6 +6,7 @@ if (!isset($_SESSION['usuario'])) {
 
 require_once("libreriaPDOCLA.php");
 require_once("archivosDAO.php");
+require_once("usuariosDAO.php");
 
 if (isset($_POST['Subir'])) {
   if (!empty($_FILES['Archivo']['name']))  //Si hemos seleccionado y subido la foto
@@ -33,15 +34,20 @@ if (isset($_POST['Subir'])) {
     $archivo->__set("Propietario", $_SESSION['usuario']);
 
     $dao1 = new archivosDAO("proyecto");
+    $dao2 = new usuariosDAO("proyecto");
 
     $dao1->Insertar($archivo);
+
+    $usuario = new Usuario;
+    $usuario = $dao2->Buscar($_SESSION['usuario']);
+    $usado = $usuario->__get("Usado") + $tamano; // se actualiza el almacenamiento usado por el usuario
+    $usuario->__set("Usado",$usado);
+    $dao2->Actualizar($usuario);
     echo "archivo subido";
 
-
-  } else  //Sino hemos subido una foto ponemos a vacio esa variable
+  } else  
   {
     echo "fichero no subido";
-    $binario_contenido = "";
   }
 }
 
@@ -116,7 +122,7 @@ if (isset($_POST['Subir'])) {
       <label class="custom-file-label" for="inputGroupFile01">Elegir archivo</label>
     </div>
   </div>
-  <input type=submit name="Subir" value="Subir" class="btn btn-default">
+  <input type=submit name="Subir" value="Subir" class="ml-5 btn btn-default">
   </form>
 </body>
 

@@ -4,6 +4,18 @@ if (!isset($_SESSION['usuario'])) {
     header("location:index.php");
 }
 
+require_once("usuariosDAO.php");
+require_once("libreriaPDOCLA.php");
+
+$dao2 = new usuariosDAO("proyecto");
+$usuario = new Usuario;
+$usuario = $dao2->Buscar($_SESSION['usuario']);
+$usado = $usuario->__get("Usado");
+
+$usado = round($usado / 1024 / 1024 , 2);
+ 
+echo $usado . "MB usados de 100MB disponibles";
+
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +70,7 @@ if (!isset($_SESSION['usuario'])) {
     <ul class="navbar-nav ml-auto nav-flex-icons">
       <li class="nav-item avatar">
         <a class="nav-link p-0" href="#">
-          <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg" class="rounded-circle z-depth-0"
+          <img src="src/img/avatar.png" class="rounded-circle z-depth-0"
             alt="avatar image" height="35">
         </a>
       </li>
@@ -68,6 +80,9 @@ if (!isset($_SESSION['usuario'])) {
 <!--/.Navbar -->
     <!-- Collapsible content -->
     <h1>Has accedido a la sesion</h1>
+    <div class="service-container" data-service="<?php echo $usado; ?>">
+    <script src="js/grafica.js"></script>
+    <canvas id="doughnutChart"></canvas>
 </body>
 
 </html>
