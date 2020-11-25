@@ -2,6 +2,9 @@
 session_start();
 if (!isset($_SESSION['usuario'])) {
   header("location:index.php");
+  /* echo "<script type='text/javascript'>
+  window.location.href = 'https://cloudisk.000webhostapp.com/index.php';
+  </script>"; */
 }
 
 require_once("libreriaPDOCLA.php");
@@ -28,25 +31,23 @@ if (isset($_POST['Subir'])) {
     /* $binario_contenido = ConvertirImg($db,fread($archivo, $tamano)); */
 
     $archivo = new Archivo;
-    $archivo->__set("Id", $nombreArchivo );
-    $archivo->__set("Tipo", $ext );
-    $archivo->__set("Peso", $tamano );
+    $archivo->__set("Id", $nombreArchivo);
+    $archivo->__set("Tipo", $ext);
+    $archivo->__set("Peso", $tamano);
     $archivo->__set("Propietario", $_SESSION['usuario']);
 
-    $dao1 = new archivosDAO("proyecto");
-    $dao2 = new usuariosDAO("proyecto");
+    $dao1 = new archivosDAO("id15495097_proyecto");
+    $dao2 = new usuariosDAO("id15495097_proyecto");
 
     $dao1->Insertar($archivo);
 
     $usuario = new Usuario;
     $usuario = $dao2->Buscar($_SESSION['usuario']);
     $usado = $usuario->__get("Usado") + $tamano; // se actualiza el almacenamiento usado por el usuario
-    $usuario->__set("Usado",$usado);
+    $usuario->__set("Usado", $usado);
     $dao2->Actualizar($usuario);
     echo "archivo subido";
-
-  } else  
-  {
+  } else {
     echo "fichero no subido";
   }
 }
@@ -77,7 +78,7 @@ if (isset($_POST['Subir'])) {
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
-  <title>Dashboard</title>
+  <title>Subir</title>
 </head>
 
 <body>
@@ -102,9 +103,12 @@ if (isset($_POST['Subir'])) {
         </li>
       </ul>
       <ul class="navbar-nav ml-auto nav-flex-icons">
+        <li class="nav-item">
+          <a class="nav-link" href="logout.php">Cerrar sesión</a>
+        </li>
         <li class="nav-item avatar">
           <a class="nav-link p-0" href="#">
-            <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg" class="rounded-circle z-depth-0" alt="avatar image" height="35">
+            <img src="src/img/avatar.png" class="rounded-circle z-depth-0" alt="avatar image" height="35">
           </a>
         </li>
       </ul>
@@ -113,16 +117,16 @@ if (isset($_POST['Subir'])) {
   <!--/.Navbar -->
   <!-- Collapsible content -->
   <form name=f1 method=post action=# enctype="multipart/form-data">
-  <div class="input-group p-5">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="inputGroupFileAddon01">Subir</span>
+    <div class="input-group p-5">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroupFileAddon01">Subir</span>
+      </div>
+      <div class="custom-file">
+        <input name=Archivo lang="es" type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+        <label class="custom-file-label" for="inputGroupFile01">Elegir archivo</label>
+      </div>
     </div>
-    <div class="custom-file">
-      <input name=Archivo lang="es" type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-      <label class="custom-file-label" for="inputGroupFile01">Elegir archivo</label>
-    </div>
-  </div>
-  <input type=submit name="Subir" value="Subir" class="ml-5 btn btn-default">
+    <input type=submit name="Subir" value="Subir" class="ml-5 btn btn-default">
   </form>
 </body>
 

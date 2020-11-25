@@ -5,6 +5,8 @@
 $host = 'localhost';
 $user = 'root';
 $pass = '';
+/* $user = 'id15495097_localhost';
+$pass = 'ykpw{0/<+?t7Jwg)'; */
 
 function Conectar($base)         //Nos conectamos a esa BBDD con los parámetros seleccionados
 {

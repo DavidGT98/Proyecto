@@ -1,0 +1,11 @@
+body {
+  background-color: aliceblue;
+  /* background: url(../img/background.jpg) no-repeat center center fixed; */
+}
+
+.user-img img {
+  width: 90px;
+  height: 90px;
+  box-shadow: 0px 0px 3px #8484;
+  border-radius: 50%;
+}

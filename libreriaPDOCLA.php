@@ -5,6 +5,8 @@ class ConBase
     private $host = 'localhost';
     private $usuario = 'root';
     private $clave = '';
+/*     private $usuario = 'id15495097_localhost';
+    private $clave = 'ykpw{0/<+?t7Jwg)'; */
 
     protected $db;
     protected $dbname;
@@ -24,6 +26,7 @@ class ConBase
 
         try {
             $this->db = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->dbname, $this->usuario);
+            /* $this->db = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->dbname, $this->usuario, $this->clave); */
             $this->db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
             $this->db->exec("set names utf8mb4");
             return ($this->db);
@@ -47,7 +50,7 @@ class ConBase
 
         $resul = $this->db->prepare($consulta);
 
-        echo $consulta;
+        /* echo $consulta; */
 
         if (!$resul->execute($param)) {
             echo "Error al ejecutar la consulta";
