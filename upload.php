@@ -84,7 +84,7 @@ if (isset($_POST['Subir'])) {
 <body>
   <!--Navbar -->
   <nav class="mb-1 navbar navbar-expand-lg navbar-light default-color lighten-1">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="dashboard.php">ClouDisk</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555" aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -102,14 +102,14 @@ if (isset($_POST['Subir'])) {
           <a class="nav-link" href="#">Subir</a>
         </li>
       </ul>
-      <ul class="navbar-nav ml-auto nav-flex-icons">
-        <li class="nav-item">
-          <a class="nav-link" href="logout.php">Cerrar sesión</a>
-        </li>
-        <li class="nav-item avatar">
-          <a class="nav-link p-0" href="#">
-            <img src="src/img/avatar.png" class="rounded-circle z-depth-0" alt="avatar image" height="35">
-          </a>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i> Perfil </a>
+          <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+            <a class="dropdown-item" href="account.php">Cuenta</a>
+            <a class="dropdown-item" href="logout.php">Cerrar sesión</a>
+          </div>
         </li>
       </ul>
     </div>

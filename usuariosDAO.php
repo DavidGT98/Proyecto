@@ -50,6 +50,26 @@ class usuariosDAO extends ConBase
         return $Usuario;
     }
 
+    public function BuscarEmail($email)
+    {
+        $consulta = "SELECT * FROM usuarios WHERE Email = :email";
+        $Usuario = new Usuario();
+
+        $param = array(":email" => $email);
+        $this->ConsultaDatos($consulta, $param);
+
+        if (!empty($this->filas)) {
+            $fila = $this->filas[0];
+            $Usuario->__set("Nombre", $fila['Nombre']);
+            $Usuario->__set("Clave", $fila['Clave']);
+            $Usuario->__set("Email", $fila['Email']);
+            $Usuario->__set("Administrador", $fila['Administrador']);
+            $Usuario->__set("Usado", $fila['Usado']);
+        }
+
+        return $Usuario;
+    }
+
     public function Eliminar($id)
     {
 

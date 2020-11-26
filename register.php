@@ -92,7 +92,8 @@ if (isset($_SESSION['usuario'])) {
         $clave = sha1($salt1 . $clave . $salt2);
         $email = $_POST['email'];
 
-        $dao = new usuariosDAO("id15495097_proyecto");
+        /* $dao = new usuariosDAO("id15495097_proyecto"); */
+        $dao = new usuariosDAO("proyecto");
 
         $usuario = new Usuario;
         $usuario->__set("Nombre", $user);
@@ -108,8 +109,11 @@ if (isset($_SESSION['usuario'])) {
         $_SESSION['usuario'] = $user;    //Creamos una de sesion para ese usuario 
         /* header("location: dashboard.php"); */
         echo "<script type='text/javascript'>
-        window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
+        window.location.href = 'http://localhost/_____PROYECTO/dashboard.php';
         </script>";
+/*         echo "<script type='text/javascript'>
+        window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
+        </script>"; */
     }
 
     ?>

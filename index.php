@@ -65,10 +65,12 @@ session_start();
     </div> -->
 
     <div class="form card text-center">
-        <div class="user-img">
+        <div class="user-img pt-5">
             <img src="src/img/user.png" alt="user">
         </div>
+
         <form class="text-center p-5" name=f1 method=post action=#>
+
 
             <p class="h4 mb-4">Accede a tu cuenta</p>
 
@@ -107,7 +109,7 @@ session_start();
 			 where nombre='$usu' and clave='$cla'";
 
         $db = Conectar("proyecto");
-       /*  $db = Conectar("id15495097_proyecto"); */
+        /*  $db = Conectar("id15495097_proyecto"); */
         $datos = ConsultaDatos($db, $consulta);
 
         $fila = $datos[0];
@@ -126,10 +128,10 @@ session_start();
 
         if (LoginCorrecto($usuario, $clave)) {
             $_SESSION['usuario'] = $usuario;    //Creamos una de sesion para ese usuario 
-           /*  header("location: dashboard.php"); */  //Redireccionamos la pagina del menu
-           echo "<script type='text/javascript'>
+            /*  header("location: dashboard.php"); */  //Redireccionamos la pagina del menu
+            echo "<script type='text/javascript'>
            window.location.href = 'http://localhost/_____PROYECTO/dashboard.php';
-           </script>"; 
+           </script>";
             /* echo "<script type='text/javascript'>
             window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
             </script>"; */
