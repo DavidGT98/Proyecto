@@ -107,7 +107,7 @@ $usado = $usuario->__get("Usado");
             </div>
             <!-- Sign up button -->
             <input type=submit name="Guardar" value="Guardar" class="btn btn-primary">
-
+            <input type=submit name="Borrar" value="Borrar cuenta" class="btn btn-danger">
 
         </form>
 
@@ -143,9 +143,20 @@ $usado = $usuario->__get("Usado");
         echo "<script type='text/javascript'>
         window.location.href = 'http://localhost/_____PROYECTO/account.php';
         </script>";
-/*         echo "<script type='text/javascript'>
+        /*         echo "<script type='text/javascript'>
         window.location.href = ''https://cloudisk.000webhostapp.com/account.php';
         </script>"; */
+    }
+
+    if (isset($_POST['Borrar'])) {
+        $dao->Eliminar($_SESSION['usuario']);
+        if (isset($_SESSION['usuario'])) {
+            unset($_SESSION['usuario']);
+            session_destroy();
+        }
+        echo "<script type='text/javascript'>
+        window.location.href = 'http://localhost/_____PROYECTO/index.php';
+        </script>";
     }
 
     ?>

@@ -4,7 +4,10 @@ if (isset($_SESSION['usuario'])) {
     unset($_SESSION['usuario']);
     session_destroy();
 }
-header("location:index.php");
+/* header("location:index.php"); */
+echo "<script type='text/javascript'>
+window.location.href = 'http://localhost/_____PROYECTO/index.php';
+</script>"; 
 /* echo "<script type='text/javascript'>
 window.location.href = 'https://cloudisk.000webhostapp.com/index.php';
 </script>"; */

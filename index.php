@@ -1,9 +1,110 @@
 <?php
-require_once("libreria.php");
 session_start();
+
+require_once("libreriaPDOCLA.php");
+
+function Bloqueado($usu)
+{
+    $bloqueado = FALSE;  //Suponemos por defecto que no esta bloqueado	
+
+    $consulta = "SELECT Acceso, Hora
+             from intentos
+             where usuario=:usuario
+             order by hora DESC
+             limit 3";
+
+    /* $con = new ConBase("id15495097_proyecto"); */
+    $con = new ConBase("proyecto");
+
+    $param = array(":usuario" => $usu);
+
+    $con->ConsultaDatos($consulta, $param);
+
+    $cont = 0;  //Contamos los accesos denegados
+
+    while ((list($clave, $fila) = each($con->filas)) && (($fila['Acceso'] != 'C'))) {
+        $cont++;
+    }
+
+    if ($cont == 3) {
+        $transcurrido = time() - $con->filas[0]['Hora'];
+
+        $primerInt = $con->filas[2]['Hora'];
+
+        $ultimoInt = $con->filas[0]['Hora'];
+
+        $entreInt = $ultimoInt - $primerInt;
+
+        return (($cont == 3) && $transcurrido < 300 && $entreInt < 600);
+    }
+
+    return $bloqueado; // Devuelve true si hemos contado 3 D o sino un False
+
+}
+
+function LoginCorrecto($usu, $cla)
+{
+    $consulta = "select count(*) as Cuenta 
+             from usuarios 
+             where Nombre=:nombre and Clave=:clave";
+
+    /* $con = new ConBase("id15495097_proyecto"); */
+    $con = new ConBase("proyecto");
+
+    $param = array(":nombre" => $usu, ":clave" => $cla);
+
+    $con->ConsultaDatos($consulta, $param);
+
+    $fila = $con->filas[0];
+
+    $cuenta = $fila['Cuenta'];
+
+    return $cuenta;   // Puede ser 0 o 1 que me sirve como TRUE o FALSE
+
+}
+
+function TiempoRestante($usu)
+{
+    $consulta = "SELECT Acceso, Hora
+	from intentos
+	where Usuario=:usuario
+	order by hora DESC
+    limit 1";
+
+    /* $con = new ConBase("id15495097_proyecto"); */
+    $con = new ConBase("proyecto");
+
+    $param = array(":usuario" => $usu);
+
+    $con->ConsultaDatos($consulta, $param);
+    $fecha = $con->filas[0]['Hora'] + 300;
+    $campos = getdate($fecha);
+    foreach ($campos as $key => $value) {
+        $campos[$key] = ($value < 10) ? str_pad($value, 2, '0', STR_PAD_LEFT)  : $value;
+    }
+    $fecha = $campos['hours'] . ":" . $campos['minutes'] . " " . $campos['mday'] . "/" . $campos['mon'] . "/" . $campos['year'];
+    return $fecha;
+}
+
+function InsertarLogin($usu, $cla, $acceso)
+{
+    $hora = time();
+
+    $consulta = "insert into intentos 
+             values (:usuario,:clave,$hora,:acceso)";
+
+    /* $con = new ConBase("id15495097_proyecto"); */
+    $con = new ConBase("proyecto");
+
+
+    $param = array(":usuario" => $usu, ":clave" => $cla, ":acceso" => $acceso);
+
+    $con->ConsultaSimple($consulta, $param);
+}
 ?>
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -102,45 +203,47 @@ session_start();
     $salt1 = "#$.-6j";
     $salt2 = "?[*-+¿";
 
-    function LoginCorrecto($usu, $cla)
-    {
-        $consulta = "select count(*) as Cuenta 
-             from usuarios 
-			 where nombre='$usu' and clave='$cla'";
-
-        $db = Conectar("proyecto");
-        /*  $db = Conectar("id15495097_proyecto"); */
-        $datos = ConsultaDatos($db, $consulta);
-
-        $fila = $datos[0];
-
-        $cuenta = $fila['Cuenta'];
-
-        Cerrar($db);
-
-        return $cuenta;   // Puede ser 0 o 1 que sirve como TRUE o FALSE
-    }
-
     if (isset($_POST['Enviar'])) {
-        $usuario = $_POST['user'];
-        $clave = $_POST['pass'];
-        $clave = sha1($salt1 . $clave . $salt2);
+        $usu = $_POST['user'];
+        $cla = $_POST['pass'];
 
-        if (LoginCorrecto($usuario, $clave)) {
-            $_SESSION['usuario'] = $usuario;    //Creamos una de sesion para ese usuario 
-            /*  header("location: dashboard.php"); */  //Redireccionamos la pagina del menu
-            echo "<script type='text/javascript'>
-           window.location.href = 'http://localhost/_____PROYECTO/dashboard.php';
-           </script>";
-            /* echo "<script type='text/javascript'>
-            window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
-            </script>"; */
-        } else {
-            echo "<script>alert('Usuario/clave incorrecto');</script>";
-            echo "<div class='alert alert-warning'>Login incorrecto</div>";
+        $cla = sha1($salt1 . $cla . $salt2);
+
+        if (!Bloqueado($usu))        //Si el usuario no esta bloqueado	
+        {
+            if (LoginCorrecto($usu, $cla))      //Comprobamos si el login es correcto
+            {
+                $acceso = "C";   //El acceso es concedido
+                InsertarLogin($usu, $cla, $acceso);
+
+                $_SESSION['usuario'] = $usu;    //Creamos una de sesion para ese usuario 
+                echo "<script type='text/javascript'>
+                     window.location.href = 'http://localhost/_____PROYECTO/dashboard.php';
+                     </script>";
+                /* echo "<script type='text/javascript'>
+                 window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
+                 </script>"; */
+            } else {
+                echo "<div class='alert alert-warning' role='alert'>
+                Usuario/clave incorrecto</div>";
+            }
+
+            $acceso = "D";   //El acceso es denegado
+            InsertarLogin($usu, $cla, $acceso);
+        }
+
+        //Insertamos ese intento de login para el usuario
+        if (Bloqueado($usu)) {
+            echo "<div class='alert alert-danger' role='alert'>
+                     Usuario bloqueado hasta: " . TiempoRestante($usu) .
+                "</div>";
+        } else   //Estaba bloqueado
+        {
+            echo "<div class='alert alert-danger' role='alert'>
+                 Usuario bloqueado hasta: " . TiempoRestante($usu) .
+                "</div>";
         }
     }
-
 
     ?>
 
