@@ -5,7 +5,7 @@ class ConBase
     private $host = 'localhost';
     private $usuario = 'root';
     private $clave = '';
-/*     private $usuario = 'id15495097_localhost';
+    /*     private $usuario = 'id15495097_localhost';
     private $clave = 'ykpw{0/<+?t7Jwg)'; */
 
     protected $db;
@@ -50,9 +50,18 @@ class ConBase
 
         $resul = $this->db->prepare($consulta);
 
-        /* echo $consulta; */
+        /*         echo $consulta."<br>";
+        foreach ($param as $key => $value) {
+            echo $value;
+        }
+        echo "<br>"; */
 
         if (!$resul->execute($param)) {
+            echo $consulta . "<br>";
+            foreach ($param as $key => $value) {
+                echo $value;
+            }
+            echo "<br>";
             echo "Error al ejecutar la consulta";
         }
 

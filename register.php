@@ -1,6 +1,6 @@
 <?php
 require_once("libreriaPDOCLA.php");
-require_once("usuariosDAO.php");
+require_once("controllers/usuariosDAO.php");
 
 session_start();
 if (isset($_SESSION['usuario'])) {

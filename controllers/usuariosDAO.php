@@ -1,5 +1,5 @@
 <?php
-require_once("usuario.php");
+require_once("models/usuario.php");
 require_once("libreriaPDOCLA.php");
 
 class usuariosDAO extends ConBase

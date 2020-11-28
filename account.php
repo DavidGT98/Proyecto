@@ -4,7 +4,7 @@ if (!isset($_SESSION['usuario'])) {
     header("location:index.php");
 }
 
-require_once("usuariosDAO.php");
+require_once("controllers/usuariosDAO.php");
 require_once("libreriaPDOCLA.php");
 
 $dao = new usuariosDAO("proyecto");

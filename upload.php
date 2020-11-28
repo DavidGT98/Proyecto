@@ -8,8 +8,9 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 require_once("libreriaPDOCLA.php");
-require_once("archivosDAO.php");
-require_once("usuariosDAO.php");
+require_once("controllers/archivosDAO.php");
+require_once("controllers/usuariosDAO.php");
+require_once("controllers/movimientosDAO.php");
 
 if (isset($_POST['Subir'])) {
   if (!empty($_FILES['Archivo']['name']))  //Si hemos seleccionado y subido la foto
@@ -22,11 +23,11 @@ if (isset($_POST['Subir'])) {
 
     $ext = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
 
-    $archivo = fopen($temporal, "rb");   //Abrimos el archivo con formato binario
+    /* $archivo = fopen($temporal, "rb");   //Abrimos el archivo con formato binario */
 
     /* $binario_contenido = addslashes(fread($archivo, $tamano)); */
 
-    $binario_contenido = fread($archivo, $tamano);
+    /* $binario_contenido = fread($archivo, $tamano); */
 
     /* $binario_contenido = ConvertirImg($db,fread($archivo, $tamano)); */
 
@@ -36,17 +37,55 @@ if (isset($_POST['Subir'])) {
     $archivo->__set("Peso", $tamano);
     $archivo->__set("Propietario", $_SESSION['usuario']);
 
-    $dao1 = new archivosDAO("id15495097_proyecto");
+    /*     $dao1 = new archivosDAO("id15495097_proyecto");
+
     $dao2 = new usuariosDAO("id15495097_proyecto");
 
-    $dao1->Insertar($archivo);
+    $dao3 = new movimientosDAO("id15495097_proyecto"); */
+
+    $dao1 = new archivosDAO("proyecto");
+
+    $dao2 = new usuariosDAO("proyecto");
+
+    $dao3 = new movimientosDAO("proyecto");
 
     $usuario = new Usuario;
     $usuario = $dao2->Buscar($_SESSION['usuario']);
-    $usado = $usuario->__get("Usado") + $tamano; // se actualiza el almacenamiento usado por el usuario
-    $usuario->__set("Usado", $usado);
-    $dao2->Actualizar($usuario);
-    echo "archivo subido";
+
+    if (($tamano / 1024 / 1024) > 100) { // Si el archivo pesa mas de 100mb no se podrá subir
+      echo "El archivo es demasiado grande";
+    } else {
+      if ((($usuario->__get("Usado") + $tamano) / 1024 / 1024) <= 100) { // Se comprueba que haya espacio para el fichero
+
+        $ficheroAnt = new Archivo;
+        $ficheroAnt = $dao1->Buscar($archivo->__get("Id"), $_SESSION['usuario']);
+        if ($ficheroAnt->__get("Id") != null && $ficheroAnt->__get("Id") != "") { // Si ese usuario ya tiene un archivo con ese mismo nombre, lo reemplazamos
+          $dao1->Eliminar($archivo->__get("Id"), $_SESSION['usuario']);
+          $usado = $usuario->__get("Usado") - $ficheroAnt->__get("Peso"); 
+          $movimiento1 = new Movimiento();
+          $movimiento1->__set("Usuario", $_SESSION['usuario']);
+          $movimiento1->__set("Fecha", time());
+          $movimiento1->__set("Tipo", "borrado");
+          $movimiento1->__set("Cantidad", $ficheroAnt->__get("Peso"));
+          $movimiento1->__set("Fichero", $ficheroAnt->__get("Id"));
+          $dao3->Insertar($movimiento1);
+        }
+        $dao1->Insertar($archivo);
+        $usado = $usuario->__get("Usado") + $tamano; // Se actualiza el almacenamiento usado por el usuario
+        $usuario->__set("Usado", $usado);
+        $dao2->Actualizar($usuario);
+        $movimiento2 = new Movimiento();
+        $movimiento2->__set("Usuario", $_SESSION['usuario']);
+        $movimiento2->__set("Fecha", time()+1);
+        $movimiento2->__set("Tipo", "subida");
+        $movimiento2->__set("Cantidad", $tamano);
+        $movimiento2->__set("Fichero", $nombreArchivo);
+        $dao3->Insertar($movimiento2);
+        echo "archivo subido";
+      } else {
+        echo "No hay espacio suficiente";
+      }
+    }
   } else {
     echo "fichero no subido";
   }
