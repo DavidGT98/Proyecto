@@ -45,6 +45,9 @@ if (isset($_SESSION['usuario'])) {
 <body>
     <div class="form card">
         <form class="text-center p-5" name=f1 method=post action=#>
+            <div>
+                <img src="src/img/logo.png" width="200" height="200" alt="user">
+            </div>
 
             <p class="h4 mb-4">Regístrate!</p>
 
@@ -111,7 +114,7 @@ if (isset($_SESSION['usuario'])) {
         echo "<script type='text/javascript'>
         window.location.href = 'http://localhost/_____PROYECTO/dashboard.php';
         </script>";
-/*         echo "<script type='text/javascript'>
+        /*         echo "<script type='text/javascript'>
         window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
         </script>"; */
     }

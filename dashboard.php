@@ -96,7 +96,7 @@ echo $usado . "MB usados de 100MB disponibles";
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Movimientos</a>
+          <a class="nav-link" href="movements.php">Movimientos</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="upload.php">Subir</a>
@@ -130,10 +130,10 @@ echo $usado . "MB usados de 100MB disponibles";
   <div class="service-container" data-service="<?php echo $usado; ?>"></div>
   <script src="js/grafica.js"></script>
   <div class="row d-flex justify-content-center">
-    <div class="col-md-8">
+    <div class="col-sm-12 col-md-8">
       <canvas id="doughnutChart"></canvas>
     </div>
-    <div class="col-4">
+    <div class="col-sm-12 col-md-4">
       <table class="tg">
         <thead>
           <tr>

@@ -134,7 +134,7 @@ if (isset($_POST['Subir'])) {
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Movimientos</a>
+          <a class="nav-link" href="movements.php">Movimientos</a>
         </li>
         <li class="nav-item active">
           <span class="sr-only">(current)</span>

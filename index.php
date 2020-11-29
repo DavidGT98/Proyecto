@@ -138,34 +138,8 @@ function InsertarLogin($usu, $cla, $acceso)
 </head>
 
 <body>
-    <!--     <div class="form card">
 
-        <div class="user-img">
-            <img src="src/img/user.png" alt="user">
-        </div>
-        <form name=f1 class="text-center p-5" action="#" method="POST">
-
-            <div class="input-group my-4">
-                <span class="input-group-prepend">
-                    <div class="input-group-text border-right-0"><i class="fa fa-user"></i></div>
-                </span>
-                <input name="user" type="text" id="user-group" class="form-control" placeholder="Nombre de usuario">
-            </div>
-            <div class="input-group my-4">
-                <span class="input-group-prepend">
-                    <div class="input-group-text border-right-0"><i class="fa fa-key"></i></div>
-                </span>
-                <input name="pass" type="password" class="form-control" placeholder="Contraseña" id="pass-group">
-            </div>
-                                <button name="Enviar" value="Enviar" type="button" class="btn btn-warning">Login</button>
-            <input type=submit name="Enviar" value="Enviar" class="btn btn-primary">
-            <div class="forgot">
-                <a href="register.php" class="badge badge-dark">Registrarse</a>
-            </div>
-        </form>
-    </div> -->
-
-    <div class="form card text-center">
+    <!--     <div class="form card text-center">
         <div class="user-img pt-5">
             <img src="src/img/user.png" alt="user">
         </div>
@@ -175,27 +149,86 @@ function InsertarLogin($usu, $cla, $acceso)
 
             <p class="h4 mb-4">Accede a tu cuenta</p>
 
-            <!-- User -->
+
             <div class="input-group mb-4">
                 <span class="input-group-prepend">
                     <div class="input-group-text border-right-0"><i class="fa fa-user"></i></div>
                 </span>
                 <input type="text" name="user" id="user" class="form-control" placeholder="Usuario" required>
             </div>
-            <!-- Password -->
+
             <div class="input-group mb-4">
                 <span class="input-group-prepend">
                     <div class="input-group-text border-right-0"><i class="fa fa-key"></i></div>
                 </span>
                 <input type="password" name="pass" id="pass" class="form-control" placeholder="Contraseña" required>
             </div>
-            <!-- Sign up button -->
+
             <input type=submit name="Enviar" value="Enviar" class="btn btn-primary">
-            <!-- Terms of service -->
+
             <div class="mt-3">
                 <a href="register.php" class="badge badge-dark">Registrarse</a>
             </div>
         </form>
+
+    </div> -->
+
+    <div class="container my-4 px-0">
+
+        <!--Section: Content-->
+        <section class="p-4 my-md-4 text-center">
+
+            <form class="my-4 mx-md-4" name=f1 method=post action=#>
+
+                <div class="row">
+                    <div class="col-md-6 mx-auto">
+
+                        <div class="card">
+
+                            <div >
+                                <img src="src/img/logo.png" width="200" height="200" alt="user">
+                            </div>
+
+                            <div class="card-body">
+
+                                <form class="text-center" style="color: #757575;" action="#">
+
+                                    <h3 class="font-weight-bold my-4 pb-2 text-center dark-grey-text">Iniciar sesión</h3>
+
+                                    <div class="input-group mb-4">
+                                        <span class="input-group-prepend">
+                                            <div class="input-group-text border-right-0"><i class="fa fa-user"></i></div>
+                                        </span>
+                                        <input type="text" name="user" id="user" class="form-control" placeholder="Usuario" required>
+                                    </div>
+
+                                    <div class="input-group mb-4">
+                                        <span class="input-group-prepend">
+                                            <div class="input-group-text border-right-0"><i class="fa fa-key"></i></div>
+                                        </span>
+                                        <input type="password" name="pass" id="pass" class="form-control" placeholder="Contraseña" required>
+                                    </div>
+                                    <small class="form-text text-right">
+                                        <a class="text-info" href="register.php">Registrarse</a>
+                                    </small>
+
+                                    <div class="text-center">
+                                        <input type=submit name="Enviar" value="Enviar" class="btn btn-outline-primary">
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </section>
+        <!--Section: Content-->
+
 
     </div>
 

@@ -17,7 +17,7 @@ class movimientosDAO extends ConBase
     {
         $consulta = "INSERT into movimientos values(:usuario,:fecha,:tipo,:cantidad,:fichero)";
         $param = array(":usuario" => $Movimiento->__GET("Usuario"), ":fecha" => $Movimiento->__GET("Fecha"),  ":tipo" => $Movimiento->__GET("Tipo"), ":cantidad" => $Movimiento->__GET("Cantidad"), ":fichero" => $Movimiento->__GET("Fichero"));
-/*         foreach ($param as $key => $value) {
+        /*         foreach ($param as $key => $value) {
             echo "clave: ". $key . " valor: " . $value;
         } */
         $this->ConsultaSimple($consulta, $param);
@@ -72,6 +72,30 @@ class movimientosDAO extends ConBase
         $consulta = "SELECT * from movimientos";
 
         $param = array();
+
+        $this->ConsultaDatos($consulta, $param);
+
+        foreach ($this->filas as $fila) {
+            $Movimiento = new Movimiento();
+
+            $Movimiento->__set("Usuario", $fila['Usuario']);
+            $Movimiento->__set("Fecha", $fila['Fecha']);
+            $Movimiento->__set("Tipo", $fila['Tipo']);
+            $Movimiento->__set("Cantidad", $fila['Cantidad']);
+            $Movimiento->__set("Fichero", $fila['Fichero']);
+
+            $this->Movimientos[] = $Movimiento;
+        }
+        /* return $Movimientos; */
+    }
+
+    public function ListarDeUsuario($usuario)
+    {
+        $this->Archivos = array();
+
+        $consulta = "SELECT * from movimientos WHERE Usuario = :usuario";
+
+        $param = array(":usuario" => $usuario);
 
         $this->ConsultaDatos($consulta, $param);
 
