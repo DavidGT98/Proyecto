@@ -89,7 +89,7 @@ class movimientosDAO extends ConBase
         /* return $Movimientos; */
     }
 
-    public function ListarDeUsuario($usuario)
+    public function ListarPorUsuario($usuario)
     {
         $this->Archivos = array();
 

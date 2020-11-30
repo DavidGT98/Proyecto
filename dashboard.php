@@ -5,17 +5,21 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 require_once("controllers/usuariosDAO.php");
+require_once("controllers/archivosDAO.php");
 require_once("libreriaPDOCLA.php");
 
+$dao1 = new archivosDAO("proyecto");
 $dao2 = new usuariosDAO("proyecto");
-/* $dao2 = new usuariosDAO("id15495097_proyecto"); */
+
+/*$dao1 = new archivosDAO("id15495097_proyecto");
+ $dao2 = new usuariosDAO("id15495097_proyecto"); */
 $usuario = new Usuario;
 $usuario = $dao2->Buscar($_SESSION['usuario']);
 $usado = $usuario->__get("Usado");
 
 $usado = round($usado / 1024 / 1024, 2);
 
-echo $usado . "MB usados de 100MB disponibles";
+/* echo $usado . "MB usados de 100MB disponibles"; */
 
 ?>
 
@@ -35,6 +39,8 @@ echo $usado . "MB usados de 100MB disponibles";
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
   <!-- Material Design Bootstrap -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+
+  <link href="./src/css/table.css" rel="stylesheet">
   <!-- JQuery -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- Bootstrap tooltips -->
@@ -44,40 +50,8 @@ echo $usado . "MB usados de 100MB disponibles";
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 
-  <style type="text/css">
-    .tg {
-      border-collapse: collapse;
-      border-spacing: 0;
-    }
+  <script type="text/javascript" src="js/datatables2.min.js"></script>
 
-    .tg td {
-      border-color: black;
-      border-style: solid;
-      border-width: 1px;
-      font-family: Arial, sans-serif;
-      font-size: 14px;
-      overflow: hidden;
-      padding: 10px 5px;
-      word-break: normal;
-    }
-
-    .tg th {
-      border-color: black;
-      border-style: solid;
-      border-width: 1px;
-      font-family: Arial, sans-serif;
-      font-size: 14px;
-      font-weight: normal;
-      overflow: hidden;
-      padding: 10px 5px;
-      word-break: normal;
-    }
-
-    .tg .tg-0lax {
-      text-align: left;
-      vertical-align: top
-    }
-  </style>
   <title>Dashboard</title>
 </head>
 
@@ -112,7 +86,7 @@ echo $usado . "MB usados de 100MB disponibles";
           </div>
         </li>
       </ul>
-<!--       <ul class="navbar-nav ml-auto nav-flex-icons">
+      <!--       <ul class="navbar-nav ml-auto nav-flex-icons">
         <li class="nav-item">
           <a class="nav-link" href="logout.php">Cerrar sesión</a>
         </li>
@@ -130,46 +104,65 @@ echo $usado . "MB usados de 100MB disponibles";
   <div class="service-container" data-service="<?php echo $usado; ?>"></div>
   <script src="js/grafica.js"></script>
   <div class="row d-flex justify-content-center">
-    <div class="col-sm-12 col-md-8">
+    <div class="col-sm-12 col-md-6">
       <canvas id="doughnutChart"></canvas>
     </div>
-    <div class="col-sm-12 col-md-4">
-      <table class="tg">
-        <thead>
-          <tr>
-            <th class="tg-0lax">Nombre</th>
-            <th class="tg-0lax">Tamaño</th>
-            <th class="tg-0lax">etc</th>
-            <th class="tg-0lax">test</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="tg-0lax"></td>
-            <td class="tg-0lax"></td>
-            <td class="tg-0lax"></td>
-            <td class="tg-0lax"></td>
-          </tr>
-          <tr>
-            <td class="tg-0lax"></td>
-            <td class="tg-0lax"></td>
-            <td class="tg-0lax"></td>
-            <td class="tg-0lax"></td>
-          </tr>
-          <tr>
-            <td class="tg-0lax"></td>
-            <td class="tg-0lax"></td>
-            <td class="tg-0lax"></td>
-            <td class="tg-0lax"></td>
-          </tr>
-          <tr>
-            <td class="tg-0lax"></td>
-            <td class="tg-0lax"></td>
-            <td class="tg-0lax"></td>
-            <td class="tg-0lax"></td>
-          </tr>
-        </tbody>
-      </table>
+
+      <div class="col-sm-12 col-md-6 align-self-center">
+      <div class="card m-5 p-4">
+        <?php
+        $dao1->ListarPorUsuario($_SESSION['usuario']);
+
+        $archivo = new Archivo();
+        $data = array();
+        foreach ($dao1->Archivos as $archivo) {
+          $data2 = array();
+          $data2['Nombre'] = $archivo->__get("Id");
+          $data2['Tipo'] = $archivo->__get("Tipo");
+          $data2['Peso'] = round(strval($archivo->__get("Peso") / 1024 / 1024), 4) . " MB";
+          $data[] = $data2;
+        }
+        ?>
+        <script>
+          var information = <?php
+                            echo json_encode($data)
+                            ?>;
+          $(document).ready(function() {
+            $('#my-table').DataTable({
+              data: information,
+              columns: [{
+                  data: 'Nombre',
+                  title: 'Nombre'
+                },
+                {
+                  data: 'Tipo',
+                  title: 'Tipo'
+                },
+                {
+                  data: 'Peso',
+                  title: 'Tamaño'
+                }
+              ],
+              "pagingType": "first_last_numbers",
+              "language": {
+                "url": "./include/lang/dataTables_es_ES.json"
+              }
+            });
+          });
+          $('.dataTables_length').addClass('bs-select');
+        </script>
+
+        <table id="my-table" class="table tabla" cellpadding="0" cellspacing="0" width="100%">
+
+          <thead class="teal white-text">
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Tamaño</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
     </div>
   </div>
 </body>

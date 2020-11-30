@@ -64,7 +64,7 @@ $usado = $usuario->__get("Usado");
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Movimientos</a>
+                    <a class="nav-link" href="movements.php">Movimientos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="upload.php">Subir</a>
@@ -86,7 +86,7 @@ $usado = $usuario->__get("Usado");
     <!-- Collapsible content -->
 
 
-    <div class="form card text-center">
+    <div class="form card text-center" style="z-index: -1">
 
         <h3 class="mt-4 d-flex justify-content-center">Detalles de <?php echo  $usuario->__get("Nombre") ?></h3>
 

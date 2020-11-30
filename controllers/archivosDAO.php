@@ -84,4 +84,26 @@ class archivosDAO extends ConBase
         }
         /* return $Archivos; */
     }
+
+    public function ListarPorUsuario($usuario)
+    {
+        $this->Archivos = array();
+
+        $consulta = "SELECT * from ficheros WHERE Propietario = :usuario";
+
+        $param = array(":usuario" => $usuario);
+
+        $this->ConsultaDatos($consulta, $param);
+
+        foreach ($this->filas as $fila) {
+            $Archivo = new Archivo();
+
+            $Archivo->__set("Id", $fila['Id']);
+            $Archivo->__set("Peso", $fila['Peso']);
+            $Archivo->__set("Tipo", $fila['Tipo']);
+            $Archivo->__set("Propietario", $fila['Propietario']);
+            $this->Archivos[] = $Archivo;
+        }
+        /* return $Archivos; */
+    }
 }

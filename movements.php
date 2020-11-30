@@ -33,6 +33,8 @@ $usado = $usuario->__get("Usado");
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
 
+    <link href="./src/css/table.css" rel="stylesheet">
+
     <!-- JQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Bootstrap tooltips -->
@@ -83,7 +85,7 @@ $usado = $usuario->__get("Usado");
     </nav>
     <!--/.Navbar -->
     <!-- Collapsible content -->
-    <h3 class="m-4 d-flex">Actividad reciente</h3>
+    <h3 class="m-4">Actividad reciente</h3>
     <script src="js/grafica.js"></script>
     <!--         <div class="col-md-8">
            
@@ -94,7 +96,7 @@ $usado = $usuario->__get("Usado");
     <?php
     $dao1 = new movimientosDAO("proyecto");
     /*             $dao1 = new movimientosDAO("id15495097_proyecto");  */
-    $dao1->ListarDeUsuario($_SESSION['usuario']);
+    $dao1->ListarPorUsuario($_SESSION['usuario']);
 
     $movimiento = new Movimiento();
     $data = array();
@@ -166,24 +168,30 @@ $usado = $usuario->__get("Usado");
                         data: 'Fichero',
                         title: 'Fichero'
                     }
-                ]
+                ],
+                "pagingType": "first_last_numbers",
+                "language": { "url": "./include/lang/dataTables_es_ES.json" } 
             });
         });
+        $('.dataTables_length').addClass('bs-select');
     </script>
-    <table id="my-table" class="table m-1">
-        <!--Table head-->
-        <thead class="teal white-text">
-            <tr>
-                <th>Fecha</th>
-                <th>Tipo</th>
-                <th>Cantidad</th>
-                <th>Fichero</th>
-            </tr>
-        </thead>
-        <!--Table head-->
-        <!--Table body-->
-        <!--Table body-->
-    </table>
+    <div class="row justify-content-center tabla-container m-1">
+        <div class="col-md-11 align-self-center">
+            <table id="my-table" class="table tabla" cellpadding="0" cellspacing="0" width="100%">
+                <!--Table head-->
+
+                <thead class="teal white-text">
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Tipo</th>
+                        <th>Cantidad</th>
+                        <th>Fichero</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
     <!--Table-->
 </body>
 
