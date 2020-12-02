@@ -33,7 +33,10 @@ $usado = $usuario->__get("Usado");
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
 
-    <link href="./src/css/table.css" rel="stylesheet">
+
+    <link href="./src/css/datatables.min.css" rel="stylesheet">
+
+    <link href="./src/css/table2.css" rel="stylesheet">
 
     <!-- JQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -45,6 +48,10 @@ $usado = $usuario->__get("Usado");
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 
     <script type="text/javascript" src="js/datatables2.min.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.22/sorting/datetime-moment.js"></script>
 
     <title>Movimientos</title>
 </head>
@@ -101,8 +108,15 @@ $usado = $usuario->__get("Usado");
     $movimiento = new Movimiento();
     $data = array();
     foreach ($dao1->Movimientos as $movimiento) {
+        $fecha = $movimiento->__get("Fecha");
+        // "2017-12-31 10:30:26.555"
+                $campos = getdate($fecha);
+        foreach ($campos as $key => $value) {
+            $campos[$key] = ($value < 10) ? str_pad($value, 2, '0', STR_PAD_LEFT)  : $value;
+        }
+        $fecha = $campos['year'] . "-" . $campos['mon'] . "-" . $campos['mday'] . " " .  $campos['hours'] . ":" . $campos['minutes'] . ":" . $campos['seconds'];
         $data2 = array();
-        $data2['Fecha'] = $movimiento->__get("Fecha");
+        $data2['Fecha'] = $fecha;
         $data2['Tipo'] = $movimiento->__get("Tipo");
         $data2['Cantidad'] = round(strval($movimiento->__get("Cantidad") / 1024 / 1024), 4) . " MB";
         $data2['Fichero'] = $movimiento->__get("Fichero");
@@ -142,38 +156,42 @@ $usado = $usuario->__get("Usado");
     ?>
     <!--Table-->
     <script>
+        function toDate(segundos) {
+            var fecha = new Date(1970, 0, 1);
+            fecha.setSeconds(segundos);
+            return fecha;
+        }
         var information = <?php
                             echo json_encode($data)
                             ?>;
-        /* $(document).ready(function () {
-          $('#dtBasicExample').DataTable();
-          $('.dataTables_length').addClass('bs-select');
-        }); */
         $(document).ready(function() {
-            $('#my-table').DataTable({
-                data: information,
-                columns: [{
-                        data: 'Fecha',
-                        title: 'Fecha'
-                    },
-                    {
-                        data: 'Tipo',
-                        title: 'Tipo'
-                    },
-                    {
-                        data: 'Cantidad',
-                        title: 'Cantidad'
-                    },
-                    {
-                        data: 'Fichero',
-                        title: 'Fichero'
-                    }
-                ],
-                "pagingType": "first_last_numbers",
-                "language": { "url": "./include/lang/dataTables_es_ES.json" } 
-            });
-        });
-        $('.dataTables_length').addClass('bs-select');
+                    $('#my-table').DataTable({
+                            data: information,
+                            columns: [{
+                                    data: 'Fecha',
+                                    title: 'Fecha',
+                                    "render": function(data, type) {
+                                        return type === 'sort' ? data : moment(data).format('DD/MM/YYYY HH:mm');}
+                                    },
+                                    {
+                                        data: 'Tipo',
+                                        title: 'Tipo'
+                                    },
+                                    {
+                                        data: 'Cantidad',
+                                        title: 'Peso'
+                                    },
+                                    {
+                                        data: 'Fichero',
+                                        title: 'Fichero'
+                                    }
+                                ],
+                                "pagingType": "first_last_numbers",
+                                "language": {
+                                    "url": "./include/lang/dataTables_es_ES.json"
+                                }
+                            });
+                    }); $('.dataTables_length').addClass('bs-select');
     </script>
     <div class="row justify-content-center tabla-container m-1">
         <div class="col-md-11 align-self-center">
@@ -184,7 +202,7 @@ $usado = $usuario->__get("Usado");
                     <tr>
                         <th>Fecha</th>
                         <th>Tipo</th>
-                        <th>Cantidad</th>
+                        <th>Peso</th>
                         <th>Fichero</th>
                     </tr>
                 </thead>

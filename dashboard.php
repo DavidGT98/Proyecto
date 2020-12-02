@@ -40,7 +40,9 @@ $usado = round($usado / 1024 / 1024, 2);
   <!-- Material Design Bootstrap -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
 
-  <link href="./src/css/table.css" rel="stylesheet">
+  <link href="./src/css/datatables.min.css" rel="stylesheet">
+
+  <link href="./src/css/table1.css" rel="stylesheet">
   <!-- JQuery -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- Bootstrap tooltips -->
@@ -108,7 +110,7 @@ $usado = round($usado / 1024 / 1024, 2);
       <canvas id="doughnutChart"></canvas>
     </div>
 
-      <div class="col-sm-12 col-md-6 align-self-center">
+    <div class="col-sm-12 col-md-6 align-self-center">
       <div class="card m-5 p-4">
         <?php
         $dao1->ListarPorUsuario($_SESSION['usuario']);
@@ -117,7 +119,7 @@ $usado = round($usado / 1024 / 1024, 2);
         $data = array();
         foreach ($dao1->Archivos as $archivo) {
           $data2 = array();
-          $data2['Nombre'] = $archivo->__get("Id");
+          $data2['Nombre'] = "<a href='#' class='badge badge-default'>".$archivo->__get("Id")." <i class='fas fa-download'></i></a>";
           $data2['Tipo'] = $archivo->__get("Tipo");
           $data2['Peso'] = round(strval($archivo->__get("Peso") / 1024 / 1024), 4) . " MB";
           $data[] = $data2;

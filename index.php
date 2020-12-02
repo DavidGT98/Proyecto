@@ -185,29 +185,29 @@ function InsertarLogin($usu, $cla, $acceso)
 
                         <div class="card">
 
-                            <div >
+                            <div>
                                 <img src="src/img/logo.png" width="200" height="200" alt="user">
                             </div>
 
                             <div class="card-body">
 
-                                <form class="text-center" style="color: #757575;" action="#">
+                                <div class="text-center" style="color: #757575;" action="#">
 
                                     <h3 class="font-weight-bold my-4 pb-2 text-center dark-grey-text">Iniciar sesión</h3>
 
-                                    <div class="input-group mb-4">
+                                    <span class="input-group mb-4">
                                         <span class="input-group-prepend">
                                             <div class="input-group-text border-right-0"><i class="fa fa-user"></i></div>
                                         </span>
                                         <input type="text" name="user" id="user" class="form-control" placeholder="Usuario" required>
-                                    </div>
+                                    </span>
 
-                                    <div class="input-group mb-4">
+                                    <span class="input-group mb-4">
                                         <span class="input-group-prepend">
                                             <div class="input-group-text border-right-0"><i class="fa fa-key"></i></div>
                                         </span>
                                         <input type="password" name="pass" id="pass" class="form-control" placeholder="Contraseña" required>
-                                    </div>
+                                    </span>
                                     <small class="form-text text-right">
                                         <a class="text-info" href="register.php">Registrarse</a>
                                     </small>
@@ -216,7 +216,7 @@ function InsertarLogin($usu, $cla, $acceso)
                                         <input type=submit name="Enviar" value="Enviar" class="btn btn-outline-primary">
                                     </div>
 
-                                </form>
+                                </div>
 
                             </div>
 

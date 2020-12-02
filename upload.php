@@ -23,6 +23,8 @@ if (isset($_POST['Subir'])) {
 
     $ext = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
 
+    $ext = strtolower($ext);
+
     /* $archivo = fopen($temporal, "rb");   //Abrimos el archivo con formato binario */
 
     /* $binario_contenido = addslashes(fread($archivo, $tamano)); */
@@ -61,7 +63,7 @@ if (isset($_POST['Subir'])) {
         $ficheroAnt = $dao1->Buscar($archivo->__get("Id"), $_SESSION['usuario']);
         if ($ficheroAnt->__get("Id") != null && $ficheroAnt->__get("Id") != "") { // Si ese usuario ya tiene un archivo con ese mismo nombre, lo reemplazamos
           $dao1->Eliminar($archivo->__get("Id"), $_SESSION['usuario']);
-          $usado = $usuario->__get("Usado") - $ficheroAnt->__get("Peso"); 
+          $usado = $usuario->__get("Usado") - $ficheroAnt->__get("Peso");
           $movimiento1 = new Movimiento();
           $movimiento1->__set("Usuario", $_SESSION['usuario']);
           $movimiento1->__set("Fecha", time());
@@ -76,18 +78,27 @@ if (isset($_POST['Subir'])) {
         $dao2->Actualizar($usuario);
         $movimiento2 = new Movimiento();
         $movimiento2->__set("Usuario", $_SESSION['usuario']);
-        $movimiento2->__set("Fecha", time()+1);
+        $movimiento2->__set("Fecha", time() + 1);
         $movimiento2->__set("Tipo", "subida");
         $movimiento2->__set("Cantidad", $tamano);
         $movimiento2->__set("Fichero", $nombreArchivo);
         $dao3->Insertar($movimiento2);
-        echo "archivo subido";
+        $estructura = './uploads/' . $_SESSION['usuario'];
+        if (!is_dir($estructura)) {
+          mkdir($estructura, 0777, true);
+        }
+        $location = './uploads/' . $_SESSION['usuario'] . '/' . $nombreArchivo;
+        move_uploaded_file($_FILES['Archivo']['tmp_name'], $location);
+        echo "<div class='alert alert-primary' role='alert'>
+        Archivo subido!</div>";
       } else {
-        echo "No hay espacio suficiente";
+        echo "<div class='alert alert-danger' role='alert'>
+        No hay espacio suficiente!</div>";
       }
     }
   } else {
-    echo "fichero no subido";
+    echo "<div class='alert alert-danger' role='alert'>
+    Error: fichero no subido </div>";
   }
 }
 
