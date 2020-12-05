@@ -2,6 +2,7 @@
 session_start();
 
 require_once("libreriaPDOCLA.php");
+require_once("controllers/usuariosDAO.php");
 
 function Bloqueado($usu)
 {
@@ -101,6 +102,23 @@ function InsertarLogin($usu, $cla, $acceso)
 
     $con->ConsultaSimple($consulta, $param);
 }
+
+function EsAdmin($usu)
+{
+    $dao = new usuariosDAO("proyecto");
+    /* $dao2 = new usuariosDAO("id15495097_proyecto"); */
+
+    $usuario = new Usuario;
+    $usuario = $dao->Buscar($usu);
+
+    if ($usuario->__get('Administrador') == 'si') {
+        return true;
+    }else{
+        return false;
+    }
+
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -250,6 +268,12 @@ function InsertarLogin($usu, $cla, $acceso)
                 InsertarLogin($usu, $cla, $acceso);
 
                 $_SESSION['usuario'] = $usu;    //Creamos una de sesion para ese usuario 
+                if (EsAdmin($usu)) {
+                    $_SESSION['admin'] = $usu;  // Si el usuario es administrador se le lleva a su propio dashboard
+                    echo "<script type='text/javascript'>
+                    window.location.href = 'http://localhost/_____PROYECTO/admin_dashboard.php';
+                    </script>";
+                }
                 echo "<script type='text/javascript'>
                      window.location.href = 'http://localhost/_____PROYECTO/dashboard.php';
                      </script>";

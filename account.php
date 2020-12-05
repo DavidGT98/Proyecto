@@ -144,7 +144,7 @@ $usado = $usuario->__get("Usado");
         window.location.href = 'http://localhost/_____PROYECTO/account.php';
         </script>";
         /*         echo "<script type='text/javascript'>
-        window.location.href = ''https://cloudisk.000webhostapp.com/account.php';
+        window.location.href = 'https://cloudisk.000webhostapp.com/account.php';
         </script>"; */
     }
 

@@ -1,15 +1,22 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario'])) {
-  if (!isset($_SESSION['usuario'])) {
-    /* header("location:index.php"); */
-    echo "<script type='text/javascript'>
-    window.location.href = 'http://localhost/_____PROYECTO/index.php';
-    </script>";
-    /* echo "<script type='text/javascript'>
-      window.location.href = 'https://cloudisk.000webhostapp.com/index.php';
-      </script>"; */
-  }
+  /* header("location:index.php"); */
+  echo "<script type='text/javascript'>
+  window.location.href = 'http://localhost/_____PROYECTO/index.php';
+  </script>";
+  /* echo "<script type='text/javascript'>
+    window.location.href = 'https://cloudisk.000webhostapp.com/index.php';
+    </script>"; */
+}
+if (!isset($_SESSION['admin'])) {
+  /* header("location:dashboard.php"); */
+  echo "<script type='text/javascript'>
+  window.location.href = 'http://localhost/_____PROYECTO/dashboard.php';
+  </script>";
+  /* echo "<script type='text/javascript'>
+    window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
+    </script>"; */
 }
 
 require_once("libreriaPDOCLA.php");
@@ -131,22 +138,25 @@ if (isset($_POST['Subir'])) {
 <body>
   <!--Navbar -->
   <nav class="mb-1 navbar navbar-expand-lg navbar-light default-color lighten-1">
-    <a class="navbar-brand" href="dashboard.php">ClouDisk</a>
+    <a class="navbar-brand" href="admin_dashboard.php">ClouDisk - Administrador</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555" aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="dashboard.php">Inicio
+          <a class="nav-link" href="admin_dashboard.php">Inicio
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="movements.php">Movimientos</a>
+          <a class="nav-link" href="admin_movements.php">Movimientos</a>
         </li>
         <li class="nav-item active">
           <span class="sr-only">(current)</span>
           <a class="nav-link" href="#">Subir</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="admin_users.php">Usuarios</a>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">

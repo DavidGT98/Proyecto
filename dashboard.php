@@ -1,7 +1,13 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario'])) {
-  header("location:index.php");
+  /* header("location:index.php"); */
+  echo "<script type='text/javascript'>
+  window.location.href = 'http://localhost/_____PROYECTO/index.php';
+  </script>";
+      /* echo "<script type='text/javascript'>
+    window.location.href = 'https://cloudisk.000webhostapp.com/index.php';
+    </script>"; */
 }
 
 require_once("controllers/usuariosDAO.php");
@@ -100,18 +106,17 @@ $usado = round($usado / 1024 / 1024, 2);
       </ul> -->
     </div>
   </nav>
-  <!--/.Navbar -->
-  <!-- Collapsible content -->
-  <h3 class="mt-4 d-flex justify-content-center">Bienvenido/a <?php echo  $usuario->__get("Nombre") ?></h3>
+
+  <h3 class="my-4 d-flex justify-content-center">Bienvenido/a <?php echo  $usuario->__get("Nombre") ?></h3>
   <div class="service-container" data-service="<?php echo $usado; ?>"></div>
   <script src="js/grafica.js"></script>
-  <div class="row d-flex justify-content-center">
+  <div class="row d-flex flex-wrap justify-content-center">
     <div class="col-sm-12 col-md-6">
       <canvas id="doughnutChart"></canvas>
     </div>
 
     <div class="col-sm-12 col-md-6 align-self-center">
-      <div class="card m-5 p-4">
+      <div class="card my-2 ml-4 mr-3 pl-4 pr-3">
         <?php
         $dao1->ListarPorUsuario($_SESSION['usuario']);
 
@@ -119,7 +124,9 @@ $usado = round($usado / 1024 / 1024, 2);
         $data = array();
         foreach ($dao1->Archivos as $archivo) {
           $data2 = array();
-          $data2['Nombre'] = "<a href='#' class='badge badge-default'>".$archivo->__get("Id")." <i class='fas fa-download'></i></a>";
+          $data2['Nombre'] = "<a href='./download.php?Bajar=" . $archivo->__get("Id") . "' class='badge badge-pill badge-primary'>" . $archivo->__get("Id") . " <i class='fas fa-download'></i></a>";
+          $data2['Nombre'] .= " <a href='./delete.php?Eliminar=" . $archivo->__get("Id") . "' class='badge badge-danger'><i class='fas fa-trash'></i></a>";
+          /*           $data2['Nombre'] = "<input type=submit name='Bajar' value='" . $archivo->__get("Id") . "' class='btn btn-default boton'>"; */
           $data2['Tipo'] = $archivo->__get("Tipo");
           $data2['Peso'] = round(strval($archivo->__get("Peso") / 1024 / 1024), 4) . " MB";
           $data[] = $data2;
@@ -153,7 +160,6 @@ $usado = round($usado / 1024 / 1024, 2);
           });
           $('.dataTables_length').addClass('bs-select');
         </script>
-
         <table id="my-table" class="table tabla" cellpadding="0" cellspacing="0" width="100%">
 
           <thead class="teal white-text">
@@ -166,6 +172,8 @@ $usado = round($usado / 1024 / 1024, 2);
         </table>
       </div>
     </div>
+
+
   </div>
 </body>
 
