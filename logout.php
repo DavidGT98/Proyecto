@@ -1,24 +1,11 @@
 <?php
 session_start();
-if (isset($_SESSION['usuario'])) {
-    unset($_SESSION['usuario']);
-    if (isset($_SESSION['admin'])) {
-        unset($_SESSION['admin']);
-    }
-    session_destroy();
-}
-/* header("location:index.php"); */
-echo "<script type='text/javascript'>
-window.location.href = 'http://localhost/_____PROYECTO/index.php';
-</script>"; 
-/* echo "<script type='text/javascript'>
-window.location.href = 'https://cloudisk.000webhostapp.com/index.php';
-</script>"; */
+
 ?>
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -35,16 +22,32 @@ window.location.href = 'https://cloudisk.000webhostapp.com/index.php';
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
     <!-- JQuery -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
     <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 </head>
 
 <body>
+    <?php
+    if (isset($_SESSION['usuario'])) {
+        unset($_SESSION['usuario']);
+        if (isset($_SESSION['admin'])) {
+            unset($_SESSION['admin']);
+        }
+        session_destroy();
+    }
+    /* header("location:index.php"); */
+    /* echo "<script >
+window.location.href = 'http://localhost/_____PROYECTO/index.php';
+</script>";  */
+    echo "<script >
+window.location.href = 'https://cloudisk.000webhostapp.com/index.php';
+</script>";
+    ?>
     <h1 class="d-flex justify-content-center">Cerrando sesion...</h1>
 </body>
 

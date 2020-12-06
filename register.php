@@ -3,16 +3,11 @@ require_once("libreriaPDOCLA.php");
 require_once("controllers/usuariosDAO.php");
 
 session_start();
-if (isset($_SESSION['usuario'])) {
-    header("location:dashboard.php");
-    /* echo "<script type='text/javascript'>
-    window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
-    </script>"; */
-}
+
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -28,13 +23,13 @@ if (isset($_SESSION['usuario'])) {
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
     <!-- JQuery -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
     <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 
     <!-- Nuestro css-->
     <link rel="stylesheet" type="text/css" href="src/css/register.css">
@@ -43,7 +38,15 @@ if (isset($_SESSION['usuario'])) {
 </head>
 
 <body>
-    <div class="form card">
+    <?php
+    if (isset($_SESSION['usuario'])) {
+        /*     header("location:dashboard.php"); */
+        echo "<script >
+        window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
+        </script>";
+    }
+    ?>
+    <div class="form card mb-5">
         <form class="text-center p-5" name=f1 method=post action=#>
             <div>
                 <img src="src/img/logo.png" width="200" height="200" alt="user">
@@ -53,7 +56,7 @@ if (isset($_SESSION['usuario'])) {
 
             <div class="input-group mb-4">
                 <span class="input-group-prepend">
-                    <div class="input-group-text border-right-0"><i class="fa fa-user"></i></div>
+                    <span class="input-group-text border-right-0"><i class="fa fa-user"></i></span>
                 </span>
                 <input type="text" name="user" id="user" class="form-control" placeholder="Usuario" required>
             </div>
@@ -61,14 +64,14 @@ if (isset($_SESSION['usuario'])) {
             <!-- E-mail -->
             <div class="input-group mb-4">
                 <span class="input-group-prepend">
-                    <div class="input-group-text border-right-0"><i class="fa fa-envelope-open-text"></i></div>
+                    <span class="input-group-text border-right-0"><i class="fa fa-envelope-open-text"></i></span>
                 </span>
                 <input type="email" name="email" id="email" class="form-control" placeholder="E-mail" required>
             </div>
             <!-- Password -->
             <div class="input-group mb-4">
                 <span class="input-group-prepend">
-                    <div class="input-group-text border-right-0"><i class="fa fa-key"></i></div>
+                    <span class="input-group-text border-right-0"><i class="fa fa-key"></i></span>
                 </span>
                 <input type="password" name="pass" id="pass" class="form-control" placeholder="Contraseña" required>
             </div>
@@ -95,8 +98,8 @@ if (isset($_SESSION['usuario'])) {
         $clave = sha1($salt1 . $clave . $salt2);
         $email = $_POST['email'];
 
-        /* $dao = new usuariosDAO("id15495097_proyecto"); */
-        $dao = new usuariosDAO("proyecto");
+        $dao = new usuariosDAO("id15495097_proyecto");
+        /*         $dao = new usuariosDAO("proyecto"); */
 
         $usuario = new Usuario;
         $usuario->__set("Nombre", $user);
@@ -111,12 +114,12 @@ if (isset($_SESSION['usuario'])) {
 
         $_SESSION['usuario'] = $user;    //Creamos una de sesion para ese usuario 
         /* header("location: dashboard.php"); */
-        echo "<script type='text/javascript'>
+        /* echo "<script >
         window.location.href = 'http://localhost/_____PROYECTO/dashboard.php';
-        </script>";
-        /*         echo "<script type='text/javascript'>
-        window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
         </script>"; */
+        echo "<script >
+        window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
+        </script>";
     }
 
     ?>

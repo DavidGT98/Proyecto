@@ -1,45 +1,8 @@
 <?php
 session_start();
-if (!isset($_SESSION['usuario'])) {
-  /* header("location:index.php"); */
-  echo "<script type='text/javascript'>
-  window.location.href = 'http://localhost/_____PROYECTO/index.php';
-  </script>";
-  /* echo "<script type='text/javascript'>
-    window.location.href = 'https://cloudisk.000webhostapp.com/index.php';
-    </script>"; */
-}
-if (isset($_SESSION['admin'])) {
-  /* header("location:dashboard.php"); */
-  echo "<script type='text/javascript'>
-  window.location.href = 'http://localhost/_____PROYECTO/admin_dashboard.php';
-  </script>";
-  /* echo "<script type='text/javascript'>
-    window.location.href = 'https://cloudisk.000webhostapp.com/admin_dashboard.php';
-    </script>"; */
-}
-
-require_once("controllers/usuariosDAO.php");
-require_once("controllers/archivosDAO.php");
-require_once("libreriaPDOCLA.php");
-
-$dao1 = new archivosDAO("proyecto");
-$dao2 = new usuariosDAO("proyecto");
-
-/*$dao1 = new archivosDAO("id15495097_proyecto");
- $dao2 = new usuariosDAO("id15495097_proyecto"); */
-$usuario = new Usuario;
-$usuario = $dao2->Buscar($_SESSION['usuario']);
-$usado = $usuario->__get("Usado");
-
-$usado = round($usado / 1024 / 1024, 2);
-
-/* echo $usado . "MB usados de 100MB disponibles"; */
-
 ?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
@@ -59,20 +22,55 @@ $usado = round($usado / 1024 / 1024, 2);
 
   <link href="./src/css/table1.css" rel="stylesheet">
   <!-- JQuery -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- Bootstrap tooltips -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
   <!-- Bootstrap core JavaScript -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <!-- MDB core JavaScript -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 
-  <script type="text/javascript" src="js/datatables2.min.js"></script>
+  <script src="js/datatables2.min.js"></script>
 
   <title>Dashboard</title>
 </head>
 
 <body>
+  <?php
+  if (!isset($_SESSION['usuario'])) {
+    /* header("location:index.php"); */
+    /*   echo "<script >
+  window.location.href = 'http://localhost/_____PROYECTO/index.php';
+  </script>"; */
+    echo "<script >
+    window.location.href = 'https://cloudisk.000webhostapp.com/index.php';
+    </script>";
+  }
+  if (isset($_SESSION['admin'])) {
+    /* header("location:dashboard.php"); */
+    /*   echo "<script >
+  window.location.href = 'http://localhost/_____PROYECTO/admin_dashboard.php';
+  </script>"; */
+    echo "<script >
+    window.location.href = 'https://cloudisk.000webhostapp.com/admin_dashboard.php';
+    </script>";
+  }
+
+  require_once("controllers/usuariosDAO.php");
+  require_once("controllers/archivosDAO.php");
+  require_once("libreriaPDOCLA.php");
+  /* 
+$dao1 = new archivosDAO("proyecto");
+$dao2 = new usuariosDAO("proyecto"); */
+
+  $dao1 = new archivosDAO("id15495097_proyecto");
+  $dao2 = new usuariosDAO("id15495097_proyecto");
+  $usuario = new Usuario;
+  $usuario = $dao2->Buscar($_SESSION['usuario']);
+  $usado = $usuario->__get("Usado");
+
+  $usado = round($usado / 1024 / 1024, 2);
+  ?>
   <!--Navbar -->
   <nav class="mb-1 navbar navbar-expand-lg navbar-light default-color lighten-1">
     <a class="navbar-brand" href="dashboard.php">ClouDisk</a>
@@ -95,7 +93,7 @@ $usado = round($usado / 1024 / 1024, 2);
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
             <i class="fas fa-user"></i> Perfil </a>
           <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
             <a class="dropdown-item" href="account.php">Cuenta</a>
@@ -103,16 +101,6 @@ $usado = round($usado / 1024 / 1024, 2);
           </div>
         </li>
       </ul>
-      <!--       <ul class="navbar-nav ml-auto nav-flex-icons">
-        <li class="nav-item">
-          <a class="nav-link" href="logout.php">Cerrar sesión</a>
-        </li>
-        <li class="nav-item avatar">
-          <a class="nav-link p-0" href="#">
-            <img src="src/img/avatar.png" class="rounded-circle z-depth-0" alt="avatar image" height="35">
-          </a>
-        </li>
-      </ul> -->
     </div>
   </nav>
 
@@ -124,7 +112,7 @@ $usado = round($usado / 1024 / 1024, 2);
       <canvas id="doughnutChart"></canvas>
     </div>
 
-    <div class="col-sm-12 col-md-6 align-self-center">
+    <div class="col-sm-12 col-md-6 align-self-center mb-5">
       <div class="card my-2 ml-4 mr-3 pl-4 pr-3">
         <?php
         $dao1->ListarPorUsuario($_SESSION['usuario']);
@@ -135,7 +123,6 @@ $usado = round($usado / 1024 / 1024, 2);
           $data2 = array();
           $data2['Nombre'] = "<a href='./download.php?Bajar=" . $archivo->__get("Id") . "' class='badge badge-pill badge-primary'>" . $archivo->__get("Id") . " <i class='fas fa-download'></i></a>";
           $data2['Nombre'] .= " <a href='./delete.php?Eliminar=" . $archivo->__get("Id") . "' class='badge badge-danger'><i class='fas fa-trash'></i></a>";
-          /*           $data2['Nombre'] = "<input type=submit name='Bajar' value='" . $archivo->__get("Id") . "' class='btn btn-default boton'>"; */
           $data2['Tipo'] = $archivo->__get("Tipo");
           $data2['Peso'] = round(strval($archivo->__get("Peso") / 1024 / 1024), 4) . " MB";
           $data[] = $data2;
@@ -175,7 +162,7 @@ $usado = round($usado / 1024 / 1024, 2);
           });
           $('.dataTables_length').addClass('bs-select');
         </script>
-        <table id="my-table" class="table tabla" cellpadding="0" cellspacing="0" width="100%">
+        <table id="my-table" class="table tabla">
 
           <thead class="teal white-text">
             <tr>

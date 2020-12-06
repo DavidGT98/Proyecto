@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 ?>
 
 <!DOCTYPE html>
@@ -41,24 +40,14 @@ session_start();
 <body>
     <?php
     if (!isset($_SESSION['usuario'])) {
-        /* header("location:index.php"); */
-        /*   echo "<script >
-  window.location.href = 'http://localhost/_____PROYECTO/index.php';
-  </script>"; */
+        header("location:index.php");
+        /*     echo "<script >
+    window.location.href = 'http://localhost/_____PROYECTO/index.php';
+    </script>"; */
         echo "<script >
-    window.location.href = 'https://cloudisk.000webhostapp.com/index.php';
-    </script>";
+      window.location.href = 'https://cloudisk.000webhostapp.com/index.php';
+      </script>";
     }
-    if (isset($_SESSION['admin'])) {
-        /* header("location:dashboard.php"); */
-        /*   echo "<script >
-  window.location.href = 'http://localhost/_____PROYECTO/admin_dashboard.php';
-  </script>"; */
-        echo "<script >
-    window.location.href = 'https://cloudisk.000webhostapp.com/admin_account.php';
-    </script>";
-    }
-
 
     require_once("controllers/usuariosDAO.php");
     require_once("libreriaPDOCLA.php");
@@ -68,6 +57,7 @@ session_start();
     $usuario = new Usuario;
     $usuario = $dao->Buscar($_SESSION['usuario']);
     $usado = $usuario->__get("Usado");
+
     ?>
     <!--Navbar -->
     <nav class="mb-1 navbar navbar-expand-lg navbar-light default-color lighten-1">
@@ -78,14 +68,17 @@ session_start();
         <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="dashboard.php">Inicio
+                    <a class="nav-link" href="admin_dashboard.php">Inicio
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="movements.php">Movimientos</a>
+                    <a class="nav-link" href="admin_movements.php">Movimientos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="upload.php">Subir</a>
+                    <a class="nav-link" href="admin_upload.php">Subir</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="admin_users.php">Usuarios</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -93,7 +86,7 @@ session_start();
                     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
                         <i class="fas fa-user"></i> Perfil </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
-                        <a class="dropdown-item active" href="account.php">Cuenta<span class="sr-only">(current)</span></a>
+                        <a class="dropdown-item active" href="admin_account.php">Cuenta<span class="sr-only">(current)</span></a>
                         <a class="dropdown-item" href="logout.php">Cerrar sesión</a>
                     </div>
                 </li>
@@ -109,7 +102,6 @@ session_start();
         <h3 class="mt-4 d-flex justify-content-center">Detalles de <?php echo  $usuario->__get("Nombre") ?></h3>
 
         <form class="text-center p-5" name=f1 method=post action=#>
-            <!-- User -->
             <div class="input-group mb-4">
                 <span class="input-group-prepend">
                     <span class="input-group-text border-right-0"><i class="fa fa-envelope-open-text"></i></span>

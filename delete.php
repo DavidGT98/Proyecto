@@ -7,12 +7,12 @@ require_once("controllers/movimientosDAO.php");
 
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    echo "<script type='text/javascript'>
+/*     echo "<script >
     window.location.href = 'http://localhost/_____PROYECTO/dashboard.php';
-    </script>";
-    /* echo "<script type='text/javascript'>
-    window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
     </script>"; */
+    echo "<script >
+    window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
+    </script>";
 }
 
 if (isset($_GET['Eliminar'])) {
@@ -21,18 +21,18 @@ if (isset($_GET['Eliminar'])) {
     $url = $dir . '/' . $file;
     $file_pointer = "test.txt";
 
-    /*     $dao1 = new archivosDAO("id15495097_proyecto");
+        $dao1 = new archivosDAO("id15495097_proyecto");
 
     $dao2 = new usuariosDAO("id15495097_proyecto");
 
-    $dao3 = new movimientosDAO("id15495097_proyecto"); */
+    $dao3 = new movimientosDAO("id15495097_proyecto");
 
-    $dao1 = new archivosDAO("proyecto");
+/*     $dao1 = new archivosDAO("proyecto");
 
     $dao2 = new usuariosDAO("proyecto");
 
     $dao3 = new movimientosDAO("proyecto");
-
+ */
     $usuario = new Usuario;
     $usuario = $dao2->Buscar($_SESSION['usuario']);
 
@@ -54,18 +54,18 @@ if (isset($_GET['Eliminar'])) {
     }
     // se borra el fichero del almacenamiento
     if (!unlink($url)) {
-        echo "<script type='text/javascript'>
+/*         echo "<script >
         window.location.href = 'http://localhost/_____PROYECTO/dashboard.php';
-        </script>";
-        /* echo "<script type='text/javascript'>
+        </script>"; */
+        echo "<script >
     window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
-    </script>"; */
+    </script>";
     } else {
-        echo "<script type='text/javascript'>
+/*         echo "<script >
         window.location.href = 'http://localhost/_____PROYECTO/dashboard.php';
-        </script>";
-        /* echo "<script type='text/javascript'>
+        </script>"; */
+        echo "<script >
     window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
-    </script>"; */
+    </script>";
     }
 }

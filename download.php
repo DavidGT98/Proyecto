@@ -6,12 +6,12 @@ require_once("controllers/movimientosDAO.php");
 require_once("controllers/archivosDAO.php");
 
 if (!isset($_SESSION['usuario'])) {
-    echo "<script type='text/javascript'>
+/*     echo "<script >
     window.location.href = 'http://localhost/_____PROYECTO/dashboard.php';
-    </script>";
-    /* echo "<script type='text/javascript'>
-    window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
     </script>"; */
+    echo "<script >
+    window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
+    </script>";
 }
 
 if (isset($_GET['Bajar'])) {
@@ -19,13 +19,13 @@ if (isset($_GET['Bajar'])) {
     $dir = './uploads/' . $_SESSION['usuario'];
     $url = $dir . '/' . $file;
 
-        /*     $dao1 = new archivosDAO("id15495097_proyecto");
+            $dao1 = new archivosDAO("id15495097_proyecto");
 
-    $dao3 = new movimientosDAO("id15495097_proyecto"); */
+    $dao3 = new movimientosDAO("id15495097_proyecto");
 
-    $dao1 = new archivosDAO("proyecto");
+/*     $dao1 = new archivosDAO("proyecto");
     $dao3 = new movimientosDAO("proyecto");
-
+ */
 
     $archivo = new Archivo;
     $archivo = $dao1->Buscar($file, $_SESSION['usuario']);
@@ -44,13 +44,13 @@ if (isset($_GET['Bajar'])) {
         header('Content-Description: File Transfer');
         header('Content-Type: application/force-download');
         header("Content-Disposition: attachment; filename=\"" . basename($file) . "\";");
-        /*  header('Content-Transfer-Encoding: binary'); */
+        header('Content-Transfer-Encoding: binary');
         header('Expires: 0');
         header('Cache-Control: must-revalidate');
         header('Pragma: public');
         header('Content-Length: ' . filesize($url));
-        ob_clean();
-        flush();
+/*         ob_clean();
+        flush(); */
         readfile($url); //showing the path to the server where the file is to be download
         exit;
     }

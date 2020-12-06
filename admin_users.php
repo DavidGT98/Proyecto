@@ -1,36 +1,9 @@
 <?php
 session_start();
-if (!isset($_SESSION['usuario'])) {
-    /* header("location:index.php"); */
-    echo "<script type='text/javascript'>
-    window.location.href = 'http://localhost/_____PROYECTO/index.php';
-    </script>";
-    /* echo "<script type='text/javascript'>
-      window.location.href = 'https://cloudisk.000webhostapp.com/index.php';
-      </script>"; */
-}
-if (!isset($_SESSION['admin'])) {
-    /* header("location:dashboard.php"); */
-    echo "<script type='text/javascript'>
-    window.location.href = 'http://localhost/_____PROYECTO/dashboard.php';
-    </script>";
-    /* echo "<script type='text/javascript'>
-      window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
-      </script>"; */
-}
-
-require_once("controllers/usuariosDAO.php");
-require_once("libreriaPDOCLA.php");
-
-$dao2 = new usuariosDAO("proyecto");
-/* $dao2 = new usuariosDAO("id15495097_proyecto"); */
-$usuario = new Usuario;
-$usuario = $dao2->Buscar($_SESSION['usuario']);
-
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -49,27 +22,56 @@ $usuario = $dao2->Buscar($_SESSION['usuario']);
 
     <link href="./src/css/datatables.min.css" rel="stylesheet">
 
-    <link href="./src/css/table2.css" rel="stylesheet">
+    <link href="./src/css/table1.css" rel="stylesheet">
 
     <!-- JQuery -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
     <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 
-    <script type="text/javascript" src="js/datatables2.min.js"></script>
+    <script src="js/datatables2.min.js"></script>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
 
-    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.22/sorting/datetime-moment.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.22/sorting/datetime-moment.js"></script>
 
     <title>Administrar usuarios</title>
 </head>
 
 <body>
+    <?php
+    if (!isset($_SESSION['usuario'])) {
+        /* header("location:index.php"); */
+        /*     echo "<script >
+    window.location.href = 'http://localhost/_____PROYECTO/index.php';
+    </script>"; */
+        echo "<script >
+      window.location.href = 'https://cloudisk.000webhostapp.com/index.php';
+      </script>";
+    }
+    if (!isset($_SESSION['admin'])) {
+        /* header("location:dashboard.php"); */
+        /* echo "<script >
+    window.location.href = 'http://localhost/_____PROYECTO/dashboard.php';
+    </script>"; */
+        echo "<script >
+      window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
+      </script>";
+    }
+
+    require_once("controllers/usuariosDAO.php");
+    require_once("libreriaPDOCLA.php");
+
+    /* $dao2 = new usuariosDAO("proyecto"); */
+    $dao2 = new usuariosDAO("id15495097_proyecto");
+    $usuario = new Usuario;
+    $usuario = $dao2->Buscar($_SESSION['usuario']);
+
+    ?>
     <!--Navbar -->
     <nav class="mb-1 navbar navbar-expand-lg navbar-light default-color lighten-1">
         <a class="navbar-brand" href="admin_dashboard.php">ClouDisk - Administrador</a>
@@ -95,7 +97,7 @@ $usuario = $dao2->Buscar($_SESSION['usuario']);
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
                         <i class="fas fa-user"></i> Perfil </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
                         <a class="dropdown-item" href="account.php">Cuenta</a>
@@ -109,8 +111,8 @@ $usuario = $dao2->Buscar($_SESSION['usuario']);
     <h3 class="m-4">Actividad reciente</h3>
     <script src="js/grafica.js"></script>
     <?php
-    $dao1 = new usuariosDAO("proyecto");
-    /*             $dao1 = new usuariosDAO("id15495097_proyecto");  */
+    /*     $dao1 = new usuariosDAO("proyecto"); */
+    $dao1 = new usuariosDAO("id15495097_proyecto");
     $dao1->Listar();
 
     $usuario = new Usuario();
@@ -133,7 +135,6 @@ $usuario = $dao2->Buscar($_SESSION['usuario']);
         $data2['Nombre'] .= " <a href='./remove_user.php?Nombre=" . $usuario->__get("Nombre") . "' class='badge badge-pill badge-danger'><i class='fas fa-trash-alt'></i></a>";
         $data2['Clave'] = "********";
         $data2['Clave'] .= " <a href='./reset_pass.php?Nombre=" . $usuario->__get("Nombre") . "' class='badge badge-pill badge-secondary darken-4'><i class='fas fa-redo'></i></a>";
-        $data2['Email'] = $usuario->__get("Email");
         $data2['Administrador'] = $tipoUsu;
         $data2['Usado'] = round(strval($usuario->__get("Usado") / 1024 / 1024), 4) . " MB";
         $data2['Usado'] .= " <a href='./reset_usage.php?Nombre=" . $usuario->__get("Nombre") . "' class='badge badge-pill badge-secondary darken-4'><i class='fas fa-redo'></i></a>";
@@ -156,18 +157,18 @@ $usuario = $dao2->Buscar($_SESSION['usuario']);
                         title: 'Clave'
                     },
                     {
-                        data: 'Email',
-                        title: 'Email'
-                    },
-                    {
                         data: 'Administrador',
-                        title: 'Administrador'
+                        title: 'Admin'
                     },
                     {
                         data: 'Usado',
                         title: 'Usado'
                     }
                 ],
+                "columnDefs": [{
+                    "targets": 2,
+                    "className": "dt-center"
+                }],
                 "order": [
                     [0, "desc"]
                 ],
@@ -186,13 +187,12 @@ $usuario = $dao2->Buscar($_SESSION['usuario']);
     </script>
     <div class="row d-flex justify-content-center m-2 p-4">
         <div class="col-sm-12 col-md-11 align-self-center">
-            <table id="my-table" class="table tabla" cellpadding="0" cellspacing="0">
+            <table id="my-table" class="table tabla">
                 <thead class="teal white-text">
                     <tr>
                         <th>Nombre</th>
                         <th>Clave</th>
-                        <th>Email</th>
-                        <th>Administrador</th>
+                        <th>Admin</th>
                         <th>Usado</th>
                     </tr>
                 </thead>

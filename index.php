@@ -14,8 +14,8 @@ function Bloqueado($usu)
              order by hora DESC
              limit 3";
 
-    /* $con = new ConBase("id15495097_proyecto"); */
-    $con = new ConBase("proyecto");
+    $con = new ConBase("id15495097_proyecto");
+/*     $con = new ConBase(); */
 
     $param = array(":usuario" => $usu);
 
@@ -49,8 +49,8 @@ function LoginCorrecto($usu, $cla)
              from usuarios 
              where Nombre=:nombre and Clave=:clave";
 
-    /* $con = new ConBase("id15495097_proyecto"); */
-    $con = new ConBase("proyecto");
+    $con = new ConBase("id15495097_proyecto");
+/*     $con = new ConBase(); */
 
     $param = array(":nombre" => $usu, ":clave" => $cla);
 
@@ -72,8 +72,8 @@ function TiempoRestante($usu)
 	order by hora DESC
     limit 1";
 
-    /* $con = new ConBase("id15495097_proyecto"); */
-    $con = new ConBase("proyecto");
+    $con = new ConBase("id15495097_proyecto");
+/*     $con = new ConBase(); */
 
     $param = array(":usuario" => $usu);
 
@@ -91,22 +91,21 @@ function InsertarLogin($usu, $cla, $acceso)
 {
     $hora = time();
 
-    $consulta = "insert into intentos 
-             values (:usuario,:clave,$hora,:acceso)";
+    $consulta = "insert into intentos values (:usuario,:clave,:hora,:acceso)";
 
-    /* $con = new ConBase("id15495097_proyecto"); */
-    $con = new ConBase("proyecto");
+    $con = new ConBase("id15495097_proyecto");
+/*     $con = new ConBase(); */
 
 
-    $param = array(":usuario" => $usu, ":clave" => $cla, ":acceso" => $acceso);
+    $param = array(":usuario" => $usu, ":clave" => $cla, ":hora" => $hora, ":acceso" => $acceso);
 
     $con->ConsultaSimple($consulta, $param);
 }
 
 function EsAdmin($usu)
 {
-    $dao = new usuariosDAO("proyecto");
-    /* $dao2 = new usuariosDAO("id15495097_proyecto"); */
+/*     $dao = new usuariosDAO(); */
+    $dao = new usuariosDAO("id15495097_proyecto");
 
     $usuario = new Usuario;
     $usuario = $dao->Buscar($usu);
@@ -121,7 +120,7 @@ function EsAdmin($usu)
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -137,13 +136,13 @@ function EsAdmin($usu)
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
     <!-- JQuery -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
     <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 
     <!-- Nuestro css-->
     <link rel="stylesheet" type="text/css" href="src/css/register.css">
@@ -155,40 +154,6 @@ function EsAdmin($usu)
 </head>
 
 <body>
-
-    <!--     <div class="form card text-center">
-        <div class="user-img pt-5">
-            <img src="src/img/user.png" alt="user">
-        </div>
-
-        <form class="text-center p-5" name=f1 method=post action=#>
-
-
-            <p class="h4 mb-4">Accede a tu cuenta</p>
-
-
-            <div class="input-group mb-4">
-                <span class="input-group-prepend">
-                    <div class="input-group-text border-right-0"><i class="fa fa-user"></i></div>
-                </span>
-                <input type="text" name="user" id="user" class="form-control" placeholder="Usuario" required>
-            </div>
-
-            <div class="input-group mb-4">
-                <span class="input-group-prepend">
-                    <div class="input-group-text border-right-0"><i class="fa fa-key"></i></div>
-                </span>
-                <input type="password" name="pass" id="pass" class="form-control" placeholder="Contraseña" required>
-            </div>
-
-            <input type=submit name="Enviar" value="Enviar" class="btn btn-primary">
-
-            <div class="mt-3">
-                <a href="register.php" class="badge badge-dark">Registrarse</a>
-            </div>
-        </form>
-
-    </div> -->
 
     <div class="container my-4 px-0">
 
@@ -208,20 +173,20 @@ function EsAdmin($usu)
 
                             <div class="card-body">
 
-                                <div class="text-center" style="color: #757575;" action="#">
+                                <div class="text-center" style="color: #757575;">
 
                                     <h3 class="font-weight-bold my-4 pb-2 text-center dark-grey-text">Iniciar sesión</h3>
 
                                     <span class="input-group mb-4">
                                         <span class="input-group-prepend">
-                                            <div class="input-group-text border-right-0"><i class="fa fa-user"></i></div>
+                                            <span class="input-group-text border-right-0"><i class="fa fa-user"></i></span>
                                         </span>
                                         <input type="text" name="user" id="user" class="form-control" placeholder="Usuario" required>
                                     </span>
 
                                     <span class="input-group mb-4">
                                         <span class="input-group-prepend">
-                                            <div class="input-group-text border-right-0"><i class="fa fa-key"></i></div>
+                                            <span class="input-group-text border-right-0"><i class="fa fa-key"></i></span>
                                         </span>
                                         <input type="password" name="pass" id="pass" class="form-control" placeholder="Contraseña" required>
                                     </span>
@@ -279,16 +244,19 @@ function EsAdmin($usu)
                 $_SESSION['usuario'] = $usu;    //Creamos una de sesion para ese usuario 
                 if (EsAdmin($usu)) {
                     $_SESSION['admin'] = $usu;  // Si el usuario es administrador se le lleva a su propio dashboard
-                    echo "<script type='text/javascript'>
+/*                     echo "<script >
                     window.location.href = 'http://localhost/_____PROYECTO/admin_dashboard.php';
-                    </script>";
+                    </script>"; */
+                    echo "<script >
+                 window.location.href = 'https://cloudisk.000webhostapp.com/admin_dashboard.php';
+                 </script>";
                 }
-                echo "<script type='text/javascript'>
+/*                 echo "<script >
                      window.location.href = 'http://localhost/_____PROYECTO/dashboard.php';
-                     </script>";
-                /* echo "<script type='text/javascript'>
+                     </script>"; */
+                echo "<script >
                  window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
-                 </script>"; */
+                 </script>";
             } else {
                 echo "<div class='alert alert-warning' role='alert'>
                 Usuario/clave incorrecto</div>";
