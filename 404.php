@@ -39,6 +39,15 @@
         <div class="col-2">
             <a class="btn btn-primary btn-block" href="dashboard.php">Volver al inicio</a></div>
     </div>
+    <footer class="page-footer font-small">
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3 default-color-dark fixed-bottom">© 2020 Copyright:
+            <a href="https://cloudisk.000webhostapp.com/"> ClouDisk </a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
 </body>
 
 </html>

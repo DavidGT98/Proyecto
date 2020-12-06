@@ -6,7 +6,7 @@ require_once("controllers/usuariosDAO.php");
 
 function Bloqueado($usu)
 {
-    $bloqueado = FALSE;  //Suponemos por defecto que no esta bloqueado	
+    $bloqueado = false;  //Suponemos por defecto que no esta bloqueado	
 
     $consulta = "SELECT Acceso, Hora
              from intentos
@@ -113,10 +113,9 @@ function EsAdmin($usu)
 
     if ($usuario->__get('Administrador') == 'si') {
         return true;
-    }else{
+    } else {
         return false;
     }
-
 }
 
 ?>
@@ -250,6 +249,16 @@ function EsAdmin($usu)
 
     </div>
 
+    <footer class="page-footer font-small">
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3 default-color-dark fixed-bottom">© 2020 Copyright:
+            <a href="https://cloudisk.000webhostapp.com/"> ClouDisk </a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+
     <?php
     $salt1 = "#$.-6j";
     $salt2 = "?[*-+¿";
@@ -285,19 +294,18 @@ function EsAdmin($usu)
                 Usuario/clave incorrecto</div>";
             }
 
+            if (Bloqueado($usu)) {
+                echo "<div class='alert alert-danger' role='alert'>
+                     Usuario bloqueado hasta: " . TiempoRestante($usu) .
+                    "</div>";
+            }
+
             $acceso = "D";   //El acceso es denegado
             InsertarLogin($usu, $cla, $acceso);
-        }
-
-        //Insertamos ese intento de login para el usuario
-        if (Bloqueado($usu)) {
-            echo "<div class='alert alert-danger' role='alert'>
-                     Usuario bloqueado hasta: " . TiempoRestante($usu) .
-                "</div>";
         } else   //Estaba bloqueado
         {
             echo "<div class='alert alert-danger' role='alert'>
-                 Usuario bloqueado hasta: " . TiempoRestante($usu) .
+                     Usuario bloqueado hasta: " . TiempoRestante($usu) .
                 "</div>";
         }
     }

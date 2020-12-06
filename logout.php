@@ -2,6 +2,9 @@
 session_start();
 if (isset($_SESSION['usuario'])) {
     unset($_SESSION['usuario']);
+    if (isset($_SESSION['admin'])) {
+        unset($_SESSION['admin']);
+    }
     session_destroy();
 }
 /* header("location:index.php"); */

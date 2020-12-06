@@ -11,6 +11,15 @@ if (!isset($_SESSION['usuario'])) {
       </script>"; */
   }
 }
+if (isset($_SESSION['admin'])) {
+  /* header("location:dashboard.php"); */
+  echo "<script type='text/javascript'>
+  window.location.href = 'http://localhost/_____PROYECTO/admin_dashboard.php';
+  </script>";
+  /* echo "<script type='text/javascript'>
+    window.location.href = 'https://cloudisk.000webhostapp.com/admin_dashboard.php';
+    </script>"; */
+}
 
 require_once("libreriaPDOCLA.php");
 require_once("controllers/archivosDAO.php");
@@ -61,6 +70,7 @@ if (isset($_POST['Subir'])) {
         if ($ficheroAnt->__get("Id") != null && $ficheroAnt->__get("Id") != "") { // Si ese usuario ya tiene un archivo con ese mismo nombre, lo reemplazamos
           $dao1->Eliminar($archivo->__get("Id"), $_SESSION['usuario']);
           $usado = $usuario->__get("Usado") - $ficheroAnt->__get("Peso");
+          $usuario->__set("Usado", $usado);
           $movimiento1 = new Movimiento();
           $movimiento1->__set("Usuario", $_SESSION['usuario']);
           $movimiento1->__set("Fecha", time());
@@ -175,6 +185,15 @@ if (isset($_POST['Subir'])) {
     </div>
     <input type=submit name="Subir" value="Subir" class="ml-5 btn btn-default">
   </form>
+  <footer class="page-footer font-small">
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3 default-color-dark fixed-bottom">© 2020 Copyright:
+      <a href="https://cloudisk.000webhostapp.com/"> ClouDisk </a>
+    </div>
+    <!-- Copyright -->
+
+  </footer>
 </body>
 
 </html>

@@ -121,6 +121,16 @@ if (isset($_SESSION['usuario'])) {
 
     ?>
 
+    <footer class="page-footer font-small">
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3 default-color-dark fixed-bottom">© 2020 Copyright:
+            <a href="https://cloudisk.000webhostapp.com/"> ClouDisk </a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+
 </body>
 
 </html>

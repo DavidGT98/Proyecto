@@ -164,6 +164,12 @@ $usado = round($usado / 1024 / 1024, 2);
                   title: 'Tamaño'
                 }
               ],
+              "pageLength": 8,
+              "lengthMenu": [
+                [8],
+                [8]
+              ],
+              "info": false,
               "pagingType": "first_last_numbers",
               "language": {
                 "url": "./include/lang/dataTables_es_ES.json"
@@ -184,9 +190,16 @@ $usado = round($usado / 1024 / 1024, 2);
         </table>
       </div>
     </div>
-
-
   </div>
+  <footer class="page-footer font-small">
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3 default-color-dark fixed-bottom">© 2020 Copyright:
+      <a href="https://cloudisk.000webhostapp.com/"> ClouDisk </a>
+    </div>
+    <!-- Copyright -->
+
+  </footer>
 </body>
 
 </html>

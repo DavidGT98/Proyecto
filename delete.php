@@ -42,6 +42,7 @@ if (isset($_GET['Eliminar'])) {
     if ($archivo->__get("Id") != null && $archivo->__get("Id") != "") {
         $dao1->Eliminar($archivo->__get("Id"), $_SESSION['usuario']);
         $usado = $usuario->__get("Usado") - $archivo->__get("Peso");
+        $usuario->__set("Usado", $usado);
         $movimiento1 = new Movimiento();
         $movimiento1->__set("Usuario", $_SESSION['usuario']);
         $movimiento1->__set("Fecha", time());

@@ -95,7 +95,7 @@ class usuariosDAO extends ConBase
         $this->ConsultaDatos($consulta, $param);
 
         foreach ($this->filas as $fila) {
-            $Usuario = new Archivo();
+            $Usuario = new Usuario();
 
             $Usuario->__set("Nombre", $fila['Nombre']);
             $Usuario->__set("Clave", $fila['Clave']);

@@ -178,6 +178,12 @@ $usado = $usuario->__get("Usado");
                 "order": [
                     [0, "desc"]
                 ],
+                "pageLength": 8,
+                "lengthMenu": [
+                    [8, 25, 50, -1],
+                    [8, 25, 50, "All"]
+                ],
+                "info": false,
                 "pagingType": "first_last_numbers",
                 "language": {
                     "url": "./include/lang/dataTables_es_ES.json"
@@ -200,6 +206,15 @@ $usado = $usuario->__get("Usado");
             </table>
         </div>
     </div>
+    <footer class="page-footer font-small">
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3 default-color-dark fixed-bottom">© 2020 Copyright:
+            <a href="https://cloudisk.000webhostapp.com/"> ClouDisk </a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
 </body>
 
 </html>
