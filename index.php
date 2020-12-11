@@ -15,7 +15,7 @@ function Bloqueado($usu)
              limit 3";
 
     $con = new ConBase("id15495097_proyecto");
-/*     $con = new ConBase(); */
+    /*     $con = new ConBase(); */
 
     $param = array(":usuario" => $usu);
 
@@ -50,7 +50,7 @@ function LoginCorrecto($usu, $cla)
              where Nombre=:nombre and Clave=:clave";
 
     $con = new ConBase("id15495097_proyecto");
-/*     $con = new ConBase(); */
+    /*     $con = new ConBase(); */
 
     $param = array(":nombre" => $usu, ":clave" => $cla);
 
@@ -73,7 +73,7 @@ function TiempoRestante($usu)
     limit 1";
 
     $con = new ConBase("id15495097_proyecto");
-/*     $con = new ConBase(); */
+    /*     $con = new ConBase(); */
 
     $param = array(":usuario" => $usu);
 
@@ -94,7 +94,7 @@ function InsertarLogin($usu, $cla, $acceso)
     $consulta = "insert into intentos values (:usuario,:clave,:hora,:acceso)";
 
     $con = new ConBase("id15495097_proyecto");
-/*     $con = new ConBase(); */
+    /*     $con = new ConBase(); */
 
 
     $param = array(":usuario" => $usu, ":clave" => $cla, ":hora" => $hora, ":acceso" => $acceso);
@@ -104,7 +104,7 @@ function InsertarLogin($usu, $cla, $acceso)
 
 function EsAdmin($usu)
 {
-/*     $dao = new usuariosDAO(); */
+    /*     $dao = new usuariosDAO(); */
     $dao = new usuariosDAO("id15495097_proyecto");
 
     $usuario = new Usuario;
@@ -244,14 +244,14 @@ function EsAdmin($usu)
                 $_SESSION['usuario'] = $usu;    //Creamos una de sesion para ese usuario 
                 if (EsAdmin($usu)) {
                     $_SESSION['admin'] = $usu;  // Si el usuario es administrador se le lleva a su propio dashboard
-/*                     echo "<script >
+                    /*                     echo "<script >
                     window.location.href = 'http://localhost/_____PROYECTO/admin_dashboard.php';
                     </script>"; */
                     echo "<script >
                  window.location.href = 'https://cloudisk.000webhostapp.com/admin_dashboard.php';
                  </script>";
                 }
-/*                 echo "<script >
+                /*                 echo "<script >
                      window.location.href = 'http://localhost/_____PROYECTO/dashboard.php';
                      </script>"; */
                 echo "<script >

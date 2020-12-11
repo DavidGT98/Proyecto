@@ -52,11 +52,25 @@ class archivosDAO extends ConBase
     public function Eliminar($id, $propietario)
     {
 
-        $consulta = "DELETE from ficheros where Id=:id AND Propietario = :propietario";
+/*         $consulta = "DELETE from ficheros where Id=:id AND Propietario = :propietario"; */
         $consulta = "DELETE FROM `ficheros` WHERE `ficheros`.`Id` = :id AND `ficheros`.`Propietario` = :propietario ";
 
         $param = array(
             ":id" => $id, ":propietario" => $propietario
+        );
+        /* echo $consulta; */
+
+        $this->ConsultaSimple($consulta, $param);
+    }
+
+    public function EliminarDePropietario($propietario)
+    {
+
+/*         $consulta = "DELETE from ficheros where Id=:id AND Propietario = :propietario"; */
+        $consulta = "DELETE FROM `ficheros` WHERE `ficheros`.`Propietario` = :propietario ";
+
+        $param = array(
+            ":propietario" => $propietario
         );
         /* echo $consulta; */
 

@@ -79,7 +79,7 @@ class usuariosDAO extends ConBase
             ":nombre" => $id
         );
 
-        echo $consulta;
+        /* echo $consulta; */
 
         $this->ConsultaSimple($consulta, $param);
     }

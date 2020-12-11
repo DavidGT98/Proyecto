@@ -61,6 +61,8 @@ session_start();
 
 
     require_once("controllers/usuariosDAO.php");
+    require_once("controllers/archivosDAO.php");
+    require_once("controllers/movimientosDAO.php");
     require_once("libreriaPDOCLA.php");
 
     /* $dao = new usuariosDAO("proyecto"); */
@@ -121,7 +123,7 @@ session_start();
                 <span class="input-group-prepend">
                     <span class="input-group-text border-right-0"><i class="fa fa-key"></i></span>
                 </span>
-                <input type="password" name="pass" id="pass" class="form-control" placeholder="*********">
+                <input type="password" name="pass" id="pass" class="form-control" placeholder="*********" minlength="6">
             </div>
             <!-- Sign up button -->
             <input type=submit name="Guardar" value="Guardar" class="btn btn-primary">
@@ -151,7 +153,7 @@ session_start();
         $mismoEmail = $dao->BuscarEmail($email);
         if ($mismoEmail->__get("Nombre") != null && $mismoEmail->__get("Nombre") != "") {
             if ($mismoEmail->__get("Nombre") !== $usuario->__get("Nombre")) {
-                echo "ese email ya está siendo usado por otro usuario";
+                echo "<div class='alert alert-warning' role='alert'>Ese email ya está siendo usado por otro usuario</div>";
             }
         } else {
             $usuario->__set("Email", $email);
@@ -168,6 +170,12 @@ session_start();
 
     if (isset($_POST['Borrar'])) {
         $dao->Eliminar($_SESSION['usuario']);
+        $dao2 = new archivosDAO("id15495097_proyecto");
+        $dao2->EliminarDePropietario($_SESSION['usuario']);
+        $dao3 = new movimientosDAO("id15495097_proyecto");
+        $dao3->EliminarDeUsuario($_SESSION['usuario']);
+        
+        eliminarArchivos("./uploads/" . $_SESSION['usuario']);
         if (isset($_SESSION['usuario'])) {
             unset($_SESSION['usuario']);
             session_destroy();
@@ -178,6 +186,34 @@ session_start();
         echo "<script >
         window.location.href = 'https://cloudisk.000webhostapp.com/index.php';
         </script>";
+    }
+
+    function eliminarArchivos($carpeta)
+    {
+        if (is_dir($carpeta))
+            echo "existe la carpeta" . $carpeta;
+        $carpetaActual = opendir($carpeta);
+
+        if (!$carpetaActual)
+
+            return false;
+
+        while ($archivo = readdir($carpetaActual)) {
+
+            if ($archivo != "." && $archivo != "..") {
+
+                if (!is_dir($carpeta . "/" . $archivo))
+                    unlink($carpeta . "/" . $archivo);
+                else
+                eliminarArchivos($carpeta . '/' . $archivo);
+            }
+        }
+
+        closedir($carpetaActual);
+
+        rmdir($carpeta);
+
+        return true;
     }
 
     ?>

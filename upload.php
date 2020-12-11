@@ -93,8 +93,8 @@ session_start();
       $usuario = new Usuario;
       $usuario = $dao2->Buscar($_SESSION['usuario']);
 
-      if (($tamano / 1024 / 1024) > 100) { // Si el archivo pesa mas de 100mb no se podrá subir
-        echo "El archivo es demasiado grande";
+      if (($tamano / 1024 / 1024) > 31) { // Si el archivo pesa mas de 31mb no se podrá subir ya que 000webhost no admite mas
+        echo "<div class='alert alert-warning' role='alert'>El archivo es demasiado grande</div>";
       } else {
         if ((($usuario->__get("Usado") + $tamano) / 1024 / 1024) <= 100) { // Se comprueba que haya espacio para el fichero
 

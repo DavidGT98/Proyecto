@@ -58,7 +58,7 @@ session_start();
                 <span class="input-group-prepend">
                     <span class="input-group-text border-right-0"><i class="fa fa-user"></i></span>
                 </span>
-                <input type="text" name="user" id="user" class="form-control" placeholder="Usuario" required>
+                <input type="text" name="user" id="user" class="form-control" placeholder="Usuario" minlength="4" required>
             </div>
 
             <!-- E-mail -->
@@ -66,14 +66,14 @@ session_start();
                 <span class="input-group-prepend">
                     <span class="input-group-text border-right-0"><i class="fa fa-envelope-open-text"></i></span>
                 </span>
-                <input type="email" name="email" id="email" class="form-control" placeholder="E-mail" required>
+                <input type="email" name="email" id="email" class="form-control" placeholder="E-mail" minlength="4" required>
             </div>
             <!-- Password -->
             <div class="input-group mb-4">
                 <span class="input-group-prepend">
                     <span class="input-group-text border-right-0"><i class="fa fa-key"></i></span>
                 </span>
-                <input type="password" name="pass" id="pass" class="form-control" placeholder="Contraseña" required>
+                <input type="password" name="pass" id="pass" class="form-control" placeholder="Contraseña" minlength="6" required>
             </div>
             <!-- Sign up button -->
             <input type=submit name="Registrarse" value="Registrarse" class="btn btn-primary my-4">
@@ -94,32 +94,40 @@ session_start();
 
     if (isset($_POST['Registrarse'])) {
         $user = $_POST['user'];
-        $clave = $_POST['pass'];
-        $clave = sha1($salt1 . $clave . $salt2);
-        $email = $_POST['email'];
-
         $dao = new usuariosDAO("id15495097_proyecto");
-        /*         $dao = new usuariosDAO("proyecto"); */
+        $usuExiste = $dao->Buscar($user);
+        if ($usuExiste->__get('Nombre') == null && $usuExiste->__get('Nombre')  == "") {
 
-        $usuario = new Usuario;
-        $usuario->__set("Nombre", $user);
-        $usuario->__set("Clave", $clave);
-        $usuario->__set("Email", $email);
-        $usuario->__set("Administrador", "no");
-        $usuario->__set("Usado", 0);
+            $clave = $_POST['pass'];
+            $clave = sha1($salt1 . $clave . $salt2);
+            $email = $_POST['email'];
 
-        /* echo $usuario->__toString(); */
 
-        $dao->Insertar($usuario);
+            /*         $dao = new usuariosDAO("proyecto"); */
 
-        $_SESSION['usuario'] = $user;    //Creamos una de sesion para ese usuario 
-        /* header("location: dashboard.php"); */
-        /* echo "<script >
+            $usuario = new Usuario;
+            $usuario->__set("Nombre", $user);
+            $usuario->__set("Clave", $clave);
+            $usuario->__set("Email", $email);
+            $usuario->__set("Administrador", "no");
+            $usuario->__set("Usado", 0);
+
+            /* echo $usuario->__toString(); */
+
+            $dao->Insertar($usuario);
+
+            $_SESSION['usuario'] = $user;    //Creamos una de sesion para ese usuario 
+            /* header("location: dashboard.php"); */
+            /* echo "<script >
         window.location.href = 'http://localhost/_____PROYECTO/dashboard.php';
         </script>"; */
-        echo "<script >
+            echo "<script >
         window.location.href = 'https://cloudisk.000webhostapp.com/dashboard.php';
         </script>";
+        } else { 
+            echo "<div class='alert alert-danger' role='alert'>
+            Ya existe un usuario con ese nombre!</div>";
+        }
     }
 
     ?>

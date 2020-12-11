@@ -65,6 +65,20 @@ class movimientosDAO extends ConBase
         $this->ConsultaSimple($consulta, $param);
     }
 
+    public function EliminarDeUsuario($usuario)
+    {
+
+        $consulta = "DELETE from movimientos WHERE Usuario = :usuario";
+
+        $param = array(
+            ":usuario" => $usuario
+        );
+
+        /* echo $consulta; */
+
+        $this->ConsultaSimple($consulta, $param);
+    }
+
     public function Listar()
     {
         $this->Archivos = array();

@@ -33,6 +33,7 @@ if (isset($_GET['Nombre'])) {
     $usuario = new Usuario;
     $usuario = $dao2->Buscar($usu);
     if ($usuario->__get("Nombre") != null && $usuario->__get("Nombre") != "") {
+        eliminarArchivos("./uploads/" . $usu);
         $usuario->__set('Usado', 0);
         $dao2->Actualizar($usuario);
     }
@@ -43,4 +44,32 @@ if (isset($_GET['Nombre'])) {
     echo "<script >
     window.location.href = 'https://cloudisk.000webhostapp.com/admin_users.php';
     </script>";
+}
+
+function eliminarArchivos($carpeta)
+{
+    if (is_dir($carpeta))
+        echo "existe la carpeta" . $carpeta;
+    $carpetaActual = opendir($carpeta);
+
+    if (!$carpetaActual)
+
+        return false;
+
+    while ($archivo = readdir($carpetaActual)) {
+
+        if ($archivo != "." && $archivo != "..") {
+
+            if (!is_dir($carpeta . "/" . $archivo))
+                unlink($carpeta . "/" . $archivo);
+            else
+            eliminarArchivos($carpeta . '/' . $archivo);
+        }
+    }
+
+    closedir($carpetaActual);
+
+    rmdir($carpeta);
+
+    return true;
 }
